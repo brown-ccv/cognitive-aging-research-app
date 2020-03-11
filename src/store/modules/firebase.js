@@ -1,13 +1,10 @@
-import { vuexfireMutations, firestoreAction } from 'vuexfire'
+import { firestoreAction } from 'vuexfire'
 import { db } from '@/db'
 
 export default {
   namespaced: true,
   state: {
     participants: []
-  },
-  mutations: {
-    ...vuexfireMutations
   },
   actions: {
     bindParticipants: firestoreAction(({ bindFirestoreRef }) => {
@@ -18,8 +15,10 @@ export default {
       // return the promise so we can await the write
       return db.collection('participants').add({
         name: data.name,
-        age: data.age,
-        phone: data.phone
+        yob: data.yob,
+        phone: data.phone,
+        email: data.email,
+        contact_preference: data.contact_preference
       })
     })
   }
