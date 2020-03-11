@@ -1,15 +1,15 @@
 <template>
   <div>
-    <TestComponent />
+    <Form />
   </div>
 </template>
 
 <script>
-import TestComponent from '@/components/TestComponent'
+import Form from '@/components/Form'
 
 export default {
   components: {
-    TestComponent
+    Form
   }
 }
 </script>

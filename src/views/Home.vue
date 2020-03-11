@@ -1,21 +1,22 @@
 <template>
   <div>
     <p>People</p>
-    <ul v-for="item in participants" v-bind:key="item.name">
+    <ul v-for="item in firebase.participants" v-bind:key="item.name">
       <li>{{ item.name }}</li>
     </ul>
   </div>
 </template>
 
 <script>
+import store from '@/store/index'
+import { mapState } from 'vuex'
+
 export default {
-  beforeCreate() {
-    this.$store.dispatch('bindParticipants')
+  computed: {
+    ...mapState(['firebase'])
   },
-  data() {
-    return {
-      participants: this.$store.state.participants
-    }
+  beforeCreate() {
+    store.dispatch('firebase/bindParticipants')
   }
 }
 </script>
