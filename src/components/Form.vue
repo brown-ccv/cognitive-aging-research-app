@@ -4,70 +4,85 @@
       >Personal Information</label
     >
     <form id="participant-form" v-on:submit.prevent="submitForm">
-      <div class="field">
-        <label class="label">Name</label>
-        <div class="control has-icons-right">
-          <input
-            class="input"
-            type="text"
-            v-model="form.name"
-            placeholder="Name"
-            :class="{
-              error: $v.form.name.$error,
-              success: !$v.form.name.$invalid
-            }"
-            @blur="$v.form.name.$touch()"
-          />
-          <span v-if="$v.form.name.$error" class="icon is-small is-right">
-            <font-awesome-icon icon="exclamation-circle" />
-          </span>
-          <span v-if="!$v.form.name.$invalid" class="icon is-small is-right">
-            <font-awesome-icon icon="check" />
-          </span>
-          <p class="is-danger help" v-if="$v.form.name.$error">
-            Name Is Required
-          </p>
+      <BaseInput
+        id="name"
+        label="Name"
+        type="text"
+        placeholder="Enter your name"
+        v-model="form.name"
+        @blur="$v.form.name.$touch()"
+        :error="$v.form.name.$error"
+        :valid="!$v.form.name.$invalid"
+      >
+      </BaseInput>
+
+      <BaseInput
+        id="yob"
+        label="Year of Birth"
+        type="text"
+        placeholder="Year of Birth"
+        v-model="form.yob"
+        @blur="$v.form.yob.$touch()"
+        :error="$v.form.yob.$error"
+        :valid="!$v.form.yob.$invalid"
+      >
+      </BaseInput>
+
+      <BaseSelect
+        label="Preferred method of contact"
+        id="preferred-contact"
+        :options="contact_options"
+        v-model="form.contact_preference"
+      />
+
+      <BaseInput
+        id="phone"
+        label="Phone"
+        type="text"
+        placeholder="Phone"
+        v-model="form.phone"
+        @blur="$v.form.phone.$touch()"
+        :error="$v.form.phone.$error"
+        :valid="!$v.form.phone.$invalid && form.contact_preference === 'phone'"
+      >
+      </BaseInput>
+
+      <BaseInput
+        id="email"
+        label="Email"
+        type="text"
+        placeholder="Email"
+        v-model="form.email"
+        @blur="$v.form.email.$touch()"
+        :error="$v.form.email.$error"
+        :valid="!$v.form.email.$invalid && form.contact_preference === 'email'"
+      >
+      </BaseInput>
+
+      <div class="control">
+        <div v-if="success">
+          Form successfully submitted.
+          <font-awesome-icon class="success" icon="check" />
         </div>
-      </div>
-
-      <div class="control">
-        <input
-          class="input"
-          type="text"
-          v-model="form.yob"
-          placeholder="Year of Birth"
-        />
-      </div>
-
-      <div class="control">
-        <input
-          class="input"
-          type="text"
-          v-model="form.contact_preference"
-          placeholder="Preferred Contact Method"
-        />
-      </div>
-
-      <div class="control">
-        <input
-          class="input"
-          type="text"
-          v-model="form.email"
-          placeholder="Email"
-        />
-      </div>
-
-      <div class="control">
-        <input
-          class="input"
-          type="text"
-          v-model="form.phone"
-          placeholder="Phone"
-        />
-      </div>
-
-      <div class="control">
-        <button :disabled="$v.$invalid" class="button is-primary">
+        <div v-else-if="failed" class="flex">
+          <button
+            :disabled="$v.$anyError || $v.form.$invalid"
+            class="button is-primary"
+            :class="{ loading: loading }"
+          >
+            Submit
+          </button>
+          <div>
+            Failed to submit form, try again.
+            <font-awesome-icon class="error" icon="exclamation-circle" />
+          </div>
+        </div>
+        <button
+          v-else
+          :disabled="$v.$anyError || $v.form.$invalid"
+          class="button is-primary"
+          :class="{ loading: loading }"
+        >
           Submit
         </button>
       </div>
@@ -78,7 +93,7 @@
 <script>
 import store from '@/store/index'
 import { validationMixin } from 'vuelidate'
-import { email, numeric, required } from 'vuelidate/lib/validators'
+import { email, numeric, required, requiredIf } from 'vuelidate/lib/validators'
 
 export default {
   mixins: [validationMixin],
@@ -95,10 +110,16 @@ export default {
         required
       },
       email: {
-        email
+        email,
+        required: requiredIf(function() {
+          return this.form.contact_preference === 'email'
+        })
       },
       phone: {
-        numeric
+        numeric,
+        required: requiredIf(function() {
+          return this.form.contact_preference === 'phone'
+        })
       }
     }
   },
@@ -110,13 +131,28 @@ export default {
         yob: null,
         phone: null,
         email: '',
-        contact_preference: ''
-      }
+        contact_preference: 'email'
+      },
+      contact_options: ['phone', 'email'],
+      loading: false,
+      success: false,
+      failed: false,
+      submission_error: ''
     }
   },
   methods: {
     submitForm: function() {
-      store.dispatch('firebase/createParticipant', this.form)
+      this.loading = true
+      store.dispatch('firebase/createParticipant', this.form).then(
+        () => {
+          this.loading = false
+          this.success = true
+        },
+        err => {
+          this.failed = true
+          this.submission_error = err
+        }
+      )
     }
   }
 }
