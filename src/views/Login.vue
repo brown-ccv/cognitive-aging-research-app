@@ -26,14 +26,20 @@
       </BaseInput>
       <button class="button is-success" type="submit">Login</button>
     </form>
+    <h1 class="mt-1">OR</h1>
+    <div class="mt-1">
+      <button class="row button is-success" type="submit" @click="googleSignOn">
+        <font-awesome-icon class="mr-1" :icon="['fab', 'google']" />
+        Google Sign In
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 import { validationMixin } from 'vuelidate'
 import { email, required } from 'vuelidate/lib/validators'
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
+import store from '@/store/index'
 
 export default {
   mixins: [validationMixin],
@@ -54,12 +60,14 @@ export default {
     }
   },
   methods: {
-    async login() {
-      await firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(response => console.log(response))
-        .catch(err => console.log(err.message))
+    googleSignOn() {
+      store.dispatch('login/googleSignOn')
+    },
+    login() {
+      store.dispatch('login/signIn', {
+        email: this.email,
+        password: this.password
+      })
     }
   }
 }

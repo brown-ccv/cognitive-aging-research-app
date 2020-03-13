@@ -32,8 +32,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { email, required } from 'vuelidate/lib/validators'
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
+import store from '@/store/index'
 
 export default {
   mixins: [validationMixin],
@@ -54,12 +53,11 @@ export default {
     }
   },
   methods: {
-    async register() {
-      await firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(response => console.log(response))
-        .catch(err => console.log(err))
+    register() {
+      store.dispatch('register/registerUser', {
+        email: this.email,
+        password: this.password
+      })
     }
   }
 }

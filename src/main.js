@@ -28,10 +28,13 @@ requireComponent.keys().forEach(fileName => {
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCheck, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faCheck)
 library.add(faExclamationCircle)
+library.add(faGoogle)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
