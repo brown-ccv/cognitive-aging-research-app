@@ -141,7 +141,10 @@ export default {
     }
   },
   methods: {
-    submitForm: function() {
+    submitForm: async function() {
+      await this.$recaptchaLoaded()
+      const token = await this.$recaptcha('submit')
+      console.log(token)
       this.loading = true
       store.dispatch('firebase/createParticipant', this.form).then(
         () => {

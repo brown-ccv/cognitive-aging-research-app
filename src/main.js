@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import i18n from './i18n'
+import { VueReCaptcha } from 'vue-recaptcha-v3'
+
+Vue.use(VueReCaptcha, { siteKey: '6LfYQeEUAAAAAEeaM78FpwAD3VC_9zIQO_ybYwoa' })
 
 // Global registration for components starting with Base
 import upperFirst from 'lodash/upperFirst'
