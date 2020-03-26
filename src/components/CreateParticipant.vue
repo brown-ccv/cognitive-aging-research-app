@@ -3,6 +3,7 @@
     <label for="participant-form" class="label is-large"
       >Personal Information</label
     >
+
     <form id="participant-form" v-on:submit.prevent="submitForm">
       <BaseInput
         id="name"
@@ -29,11 +30,40 @@
       </BaseInput>
 
       <BaseSelect
-        label="Preferred method of contact"
-        id="preferred-contact"
-        :options="contact_options"
-        v-model="form.contact_preference"
+        label="Sex at Birth"
+        id="sex-at-birth"
+        :options="sex_at_birth_options"
+        v-model="form.sex_at_birth"
       />
+      <label class="label is-large">Contact Information</label>
+
+      <div class="field-inline">
+        <BaseSelect
+          label="Preferred method of contact"
+          id="preferred-contact"
+          :options="contact_options"
+          v-model="form.contact_preference"
+        />
+
+        <div class="field">
+          <label class="label">Preferred Time of Contact</label>
+          <div
+            class="field"
+            v-for="(item, index) in preferred_time_of_contact_options"
+            v-bind:key="index"
+          >
+            <input
+              class="is-checkradio is-success"
+              type="checkbox"
+              :id="item.label"
+              :name="item.label"
+              :value="item.value"
+              v-model="form.preferred_time_of_contact"
+            />
+            <label :for="item.label">{{ item.value }}</label>
+          </div>
+        </div>
+      </div>
 
       <BaseInput
         id="phone"
@@ -106,6 +136,9 @@ export default {
         required,
         numeric
       },
+      sex_at_birth: {
+        required
+      },
       contact_preference: {
         required
       },
@@ -130,10 +163,37 @@ export default {
         name: '',
         yob: null,
         phone: null,
+        sex_at_birth: null,
         email: '',
-        contact_preference: 'email'
+        contact_preference: 'email',
+        preferred_time_of_contact: [],
+        study: null,
+        attempted_contact_date: null,
+        contact_method: null,
+        participant_response: null,
+        participated_start_date: null,
+        participated_end_date: null
       },
+      sex_at_birth_options: ['-', 'male', 'female'],
       contact_options: ['phone', 'email'],
+      preferred_time_of_contact_options: [
+        {
+          value: 'Morning (6 AM - 10 AM)',
+          label: 'morning'
+        },
+        {
+          value: 'Mid-day (10 AM - 2 PM)',
+          label: 'mid_day'
+        },
+        {
+          value: 'Afternoon (2 PM - 6 PM)',
+          label: 'afternoon'
+        },
+        {
+          value: 'Evening (6 PM - 10 PM)',
+          label: 'evening'
+        }
+      ],
       loading: false,
       success: false,
       failed: false,
@@ -160,3 +220,13 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.field-inline
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: flex-start
+  .field
+    margin-right: 2rem
+</style>

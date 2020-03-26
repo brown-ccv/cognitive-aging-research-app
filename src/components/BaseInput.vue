@@ -29,12 +29,10 @@ export default {
   inheritAttrs: false,
   props: {
     error: {
-      type: Boolean,
-      required: true
+      type: Boolean
     },
     valid: {
-      type: Boolean,
-      required: true
+      type: Boolean
     },
     label: {
       type: String,

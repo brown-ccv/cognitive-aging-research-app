@@ -18,7 +18,7 @@
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <router-link class="navbar-item" to="/">Home</router-link>
-          <router-link class="navbar-item" to="/form">Form</router-link>
+          <router-link class="navbar-item" to="/enroll">Enroll</router-link>
           <router-link class="navbar-item" to="/dashboard"
             >Dashboard</router-link
           >

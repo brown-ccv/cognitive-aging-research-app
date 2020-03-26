@@ -1,6 +1,6 @@
 <template>
-  <fieldset>
-    <label :for="id">{{ label }}</label>
+  <fieldset class="field">
+    <label :for="id" class="label">{{ label }}</label>
     <div class="field">
       <div class="control">
         <div class="select">

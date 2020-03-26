@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from '@/views/Dashboard.vue'
+import Dashboard from '@/views/private/Dashboard.vue'
+import Edit from '@/views/private/Edit.vue'
 import Home from '@/views/Home.vue'
-import Form from '@/views/Form.vue'
+import Enroll from '@/views/Enroll.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import * as firebase from 'firebase/app'
@@ -17,9 +18,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/form',
-    name: 'form',
-    component: Form
+    path: '/enroll',
+    name: 'enroll',
+    component: Enroll
   },
   {
     path: '/login',
@@ -35,6 +36,12 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/edit/:participantId',
+    name: 'edit',
+    component: Edit,
     meta: { requiresAuth: true }
   }
 ]
