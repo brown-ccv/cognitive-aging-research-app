@@ -6,6 +6,11 @@
     <main class="two-column-grid-main content">
       <h1>Study A</h1>
       <form id="participant-update-form" v-on:submit.prevent="submitForm">
+        <datepicker
+          :value="participant.attempted_contact_date"
+          v-model="participant.attempted_contact_date"
+          name="attempted_contact"
+        ></datepicker>
         <BaseInput
           id="attempted"
           label="Attempted Contact Date"
@@ -95,10 +100,12 @@ import { required } from 'vuelidate/lib/validators'
 import { mapState } from 'vuex'
 
 import ParticipantInfo from '@/components/ParticipantInfo'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
   components: {
-    ParticipantInfo
+    ParticipantInfo,
+    Datepicker
   },
   mixins: [validationMixin],
   data() {
