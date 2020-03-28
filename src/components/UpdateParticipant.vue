@@ -4,6 +4,7 @@
       <ParticipantInfo :participant="participant" />
     </aside>
     <main class="two-column-grid-main content">
+      {{ participant_study_list }}
       <h1>Study A</h1>
       <form id="participant-update-form" v-on:submit.prevent="submitForm">
         <datepicker
@@ -117,7 +118,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('firebase', ['participant'])
+    ...mapState('firebase', ['participant', 'participant_study_list'])
   },
   validations: {
     participant: {

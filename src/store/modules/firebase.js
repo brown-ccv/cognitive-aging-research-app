@@ -5,7 +5,9 @@ export default {
   namespaced: true,
   state: {
     participants: [],
-    participant: ''
+    participant_study_list: [],
+    studies: [],
+    participant: {}
   },
   mutations: {
     SET_PARTICIPANT(state, payload) {
@@ -16,6 +18,18 @@ export default {
     bindParticipants: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('participants', db.collection('participants'))
+    }),
+    bindStudies: firestoreAction(({ bindFirestoreRef }) => {
+      return bindFirestoreRef('studies', db.collection('studies'))
+    }),
+    bindParticipantStudies: firestoreAction(({ bindFirestoreRef }, id) => {
+      return bindFirestoreRef(
+        'participant_study_list',
+        db
+          .collection('participants')
+          .doc(id)
+          .collection('study_list')
+      )
     }),
     createParticipant: firestoreAction((context, data) => {
       // return the promise so we can await the write
