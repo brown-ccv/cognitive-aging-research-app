@@ -8,6 +8,7 @@ import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import NewStudy from '@/views/private/NewStudy.vue'
 import UpdateStudy from '@/views/private/UpdateStudy.vue'
+import Participants from '@/views/private/Participants.vue'
 
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
@@ -39,6 +40,12 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/participants',
+    name: 'participants',
+    component: Participants,
     meta: { requiresAuth: true }
   },
   {
