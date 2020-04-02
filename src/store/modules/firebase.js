@@ -5,26 +5,28 @@ export default {
   namespaced: true,
   state: {
     participants: [],
-    participant_study_list: [],
+    participant_studies: [],
     studies: [],
-    participant: {}
+    participant: {},
+    study: {}
   },
   mutations: {
     SET_PARTICIPANT(state, payload) {
       state.participant = payload
+    },
+    SET_STUDY(state, payload) {
+      state.study = payload
     }
   },
   actions: {
+    // Participants actions
     bindParticipants: firestoreAction(({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
       return bindFirestoreRef('participants', db.collection('participants'))
     }),
-    bindStudies: firestoreAction(({ bindFirestoreRef }) => {
-      return bindFirestoreRef('studies', db.collection('studies'))
-    }),
     bindParticipantStudies: firestoreAction(({ bindFirestoreRef }, id) => {
       return bindFirestoreRef(
-        'participant_study_list',
+        'participant_studies',
         db
           .collection('participants')
           .doc(id)
@@ -70,6 +72,46 @@ export default {
         })
         .then(() => {
           console.log('participant updated!')
+        })
+    }),
+    // Studies actions
+    bindStudies: firestoreAction(({ bindFirestoreRef }) => {
+      return bindFirestoreRef('studies', db.collection('studies'))
+    }),
+    createStudy: firestoreAction((context, data) => {
+      return db.collection('studies').add({
+        name: data.name,
+        pi: data.pi,
+        grant_number: data.grant_number,
+        date_created: new Date(),
+        created_by: context.rootState.user
+      })
+    }),
+    setStudy: ({ commit }, id) => {
+      return db
+        .collection('studies')
+        .doc(id)
+        .get()
+        .then(snapshot => {
+          const study = snapshot.data()
+          study.id = id
+          commit('SET_STUDY', study)
+        })
+    },
+    updateStudy: firestoreAction((context, data) => {
+      console.log(data)
+      return db
+        .collection('studies')
+        .doc(data.id)
+        .update({
+          name: data.name,
+          pi: data.pi,
+          grant_number: data.grant_number,
+          updated_by: context.rootState.user,
+          date_updated: new Date()
+        })
+        .then(() => {
+          console.log('study updated!')
         })
     })
   }

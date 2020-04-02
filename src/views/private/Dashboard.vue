@@ -1,12 +1,26 @@
 <template>
   <div>
     <ParticipantTable />
-    <div v-for="(person, index) in firebase.participants" v-bind:key="index">
+    <div
+      v-for="(person, index) in firebase.participants"
+      v-bind:key="'participant' + index"
+    >
       {{ person }}
     </div>
     <br />
-    {{ firebase.studies }}
-    {{ firebase.participant_study_list }}
+    {{ firebase.participant_studies }}
+    <br />
+    <div
+      v-for="(study, index) in firebase.studies"
+      v-bind:key="'study' + index"
+    >
+      {{ study.id }}
+      <router-link
+        :to="{ name: 'update_study', params: { studyId: study.id } }"
+      >
+        Edit
+      </router-link>
+    </div>
   </div>
 </template>
 

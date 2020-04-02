@@ -22,6 +22,9 @@
           <router-link class="navbar-item" to="/dashboard"
             >Dashboard</router-link
           >
+          <router-link class="navbar-item" to="/new_study"
+            >New Study</router-link
+          >
         </div>
 
         <div class="navbar-end">

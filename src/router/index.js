@@ -6,6 +6,9 @@ import Home from '@/views/Home.vue'
 import Enroll from '@/views/Enroll.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
+import NewStudy from '@/views/private/NewStudy.vue'
+import UpdateStudy from '@/views/private/UpdateStudy.vue'
+
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
@@ -42,6 +45,18 @@ const routes = [
     path: '/edit/:participantId',
     name: 'edit',
     component: Edit,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/new_study',
+    name: 'new_study',
+    component: NewStudy,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/update_study/:studyId',
+    name: 'update_study',
+    component: UpdateStudy,
     meta: { requiresAuth: true }
   }
 ]
