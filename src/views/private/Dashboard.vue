@@ -7,18 +7,32 @@
           ><router-link to="/new_study">+ New Study</router-link></span
         >
       </div>
-      <div class="studies-content">
-        <div v-for="(study, index) in studies" v-bind:key="'study' + index">
-          <router-link
-            :to="{ name: 'update_study', params: { studyId: study.id } }"
-          >
-            <div class="study-card card has-background-info">
-              <p class="title">{{ study.name }}</p>
-              <p class="subtitle">{{ study.pi }}</p>
-              <p class="subtitle">Grant: {{ study.grant_number }}</p>
-            </div>
-          </router-link>
-        </div>
+      <div class="study-table card">
+        <table class="table">
+          <thead>
+            <th class="has-text-success">Study</th>
+            <th class="has-text-success">PI</th>
+            <th class="has-text-success">Grant number</th>
+            <th class="has-text-success"># participants</th>
+            <th class="has-text-success"></th>
+          </thead>
+          <tbody>
+            <tr v-for="(study, index) in studies" v-bind:key="'study' + index">
+              <td>{{ study.name }}</td>
+              <td>{{ study.pi }}</td>
+              <td>{{ study.grant_number }}</td>
+              <td></td>
+              <td>
+                <router-link
+                  class="button is-link is-small"
+                  :to="{ name: 'update_study', params: { studyId: study.id } }"
+                >
+                  Edit
+                </router-link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div class="dashboard-grid-recruit content">
@@ -64,22 +78,23 @@ export default {
   &-participants
     grid-area: participants
 
-.study-card
-  width: 12rem
-  padding: 2rem
-  margin-bottom: 1rem
-  border-radius: 3px
-  .title
-    font-size: 1.4rem
-.studies-content
-    display: flex
-    flex-direction: row
-    flex-wrap: wrap
-    justify-content: space-between
+
 .studies-title
   display: flex
   align-content: center
+  background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(81, 52, 178), rgb(177, 117, 235)) repeat scroll 0% 0%
+  margin-bottom: 1rem
+  padding: 1rem
+  border-radius: 3px
+  span
+    color: white
+    margin-bottom: 0
 .new-study
   margin-left: 1rem
   padding-top: 0.4rem
+
+.study-table
+  padding: 1rem
+  border-radius: 3px
+  font-size: 0.8rem
 </style>

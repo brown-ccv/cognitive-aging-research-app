@@ -4,92 +4,118 @@
       <ParticipantInfo :participant="participant" />
     </aside>
     <main class="two-column-grid-main content">
-      {{ participant_study_list }}
-      <h1>Study A</h1>
-      <form id="participant-update-form" v-on:submit.prevent="submitForm">
-        <datepicker
-          :value="participant.attempted_contact_date"
-          v-model="participant.attempted_contact_date"
-          name="attempted_contact"
-        ></datepicker>
-        <BaseInput
-          id="attempted"
-          label="Attempted Contact Date"
-          type="date"
-          v-model="participant.attempted_contact_date"
-          @blur="$v.participant.attempted_contact_date.$touch()"
-          :error="$v.participant.attempted_contact_date.$error"
-          :valid="!$v.participant.attempted_contact_date.$invalid"
-        />
-        <BaseInput
-          id="contact_method"
-          label="Contact Method"
-          type="text"
-          placeholder="Enter contact method"
-          v-model="participant.contact_method"
-          @blur="$v.participant.contact_method.$touch()"
-          :error="$v.participant.contact_method.$error"
-          :valid="!$v.participant.contact_method.$invalid"
-        />
-        <BaseSelect
-          label="Participant Response"
-          id="sex-at-birth"
-          :options="['-', 'yes', 'no']"
-          v-model="participant.participant_response"
-        />
-
-        <div class="field-inline">
-          <BaseInput
-            class="field"
-            id="start_date"
-            label="Study Participation Start Date"
-            type="date"
-            v-model="participant.participated_start_date"
-            @blur="$v.participant.participated_start_date.$touch()"
-            :error="$v.participant.participated_start_date.$error"
-            :valid="!$v.participant.participated_start_date.$invalid"
-          />
-
-          <BaseInput
-            class="field"
-            id="end_date"
-            label="Study Participation End Date"
-            type="date"
-            v-model="participant.participated_end_date"
-            @blur="$v.participant.participated_end_date.$touch()"
-            :error="$v.participant.participated_end_date.$error"
-            :valid="!$v.participant.participated_end_date.$invalid"
-          />
-        </div>
-
-        <div class="control">
-          <div v-if="success">
-            Data successfully saved.
-            <font-awesome-icon class="success" icon="check" />
+      <fieldset class="field">
+        <label v-if="!current_study.study" class="label">Select a study</label>
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <select v-model="current_study">
+                <option
+                  v-for="(option, index) in participant_studies"
+                  :key="'select' + index"
+                  :value="option"
+                >
+                  {{ option.study.name }}
+                </option>
+              </select>
+            </div>
           </div>
-          <div v-else-if="failed" class="flex">
+        </div>
+      </fieldset>
+
+      <div v-if="current_study.study">
+        <h1>{{ current_study.study.name }}</h1>
+        <form id="participant-update-form" v-on:submit.prevent="submitForm">
+          <div class="field">
+            <div class="control">
+              <div class="select">
+                <datepicker
+                  :value="current_study.attempted_contact_date"
+                  v-model="current_study.attempted_contact_date"
+                  name="attempted_contact"
+                ></datepicker>
+              </div>
+            </div>
+          </div>
+          <BaseInput
+            id="attempted"
+            label="Attempted Contact Date"
+            type="date"
+            v-model="current_study.attempted_contact_date"
+            @blur="$v.current_study.attempted_contact_date.$touch()"
+            :error="$v.current_study.attempted_contact_date.$error"
+            :valid="!$v.current_study.attempted_contact_date.$invalid"
+          />
+          <BaseInput
+            id="contact_method"
+            label="Contact Method"
+            type="text"
+            placeholder="Enter contact method"
+            v-model="current_study.contact_method"
+            @blur="$v.current_study.contact_method.$touch()"
+            :error="$v.current_study.contact_method.$error"
+            :valid="!$v.current_study.contact_method.$invalid"
+          />
+          <BaseSelect
+            label="Participant Response"
+            id="sex-at-birth"
+            :options="['-', 'yes', 'no']"
+            v-model="current_study.participant_response"
+          />
+
+          <div class="field-inline">
+            <BaseInput
+              class="field"
+              id="start_date"
+              label="Study Participation Start Date"
+              type="date"
+              v-model="current_study.participated_start_date"
+              @blur="$v.current_study.participated_start_date.$touch()"
+              :error="$v.current_study.participated_start_date.$error"
+              :valid="!$v.current_study.participated_start_date.$invalid"
+            />
+
+            <BaseInput
+              class="field"
+              id="end_date"
+              label="Study Participation End Date"
+              type="date"
+              v-model="current_study.participated_end_date"
+              @blur="$v.current_study.participated_end_date.$touch()"
+              :error="$v.current_study.participated_end_date.$error"
+              :valid="!$v.current_study.participated_end_date.$invalid"
+            />
+          </div>
+
+          <div class="control">
+            <div v-if="success">
+              Data successfully saved.
+              <font-awesome-icon class="success" icon="check" />
+            </div>
+            <div v-else-if="failed" class="flex">
+              <button
+                :disabled="$v.$anyError || $v.current_study.$invalid"
+                class="button is-primary"
+                :class="{ loading: loading }"
+              >
+                Save
+              </button>
+              <div>
+                Failed to save form, try again.
+                <font-awesome-icon class="error" icon="exclamation-circle" />
+              </div>
+            </div>
             <button
-              :disabled="$v.$anyError || $v.participant.$invalid"
+              v-else
+              :disabled="$v.$anyError || $v.current_study.$invalid"
               class="button is-primary"
               :class="{ loading: loading }"
             >
               Save
             </button>
-            <div>
-              Failed to save form, try again.
-              <font-awesome-icon class="error" icon="exclamation-circle" />
-            </div>
           </div>
-          <button
-            v-else
-            :disabled="$v.$anyError || $v.participant.$invalid"
-            class="button is-primary"
-            :class="{ loading: loading }"
-          >
-            Save
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </main>
   </div>
 </template>
@@ -111,17 +137,19 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
+      current_study: {},
       loading: false,
       success: false,
       failed: false,
       submission_error: ''
     }
   },
+
   computed: {
-    ...mapState('firebase', ['participant', 'participant_study_list'])
+    ...mapState('firebase', ['participant', 'participant_studies'])
   },
   validations: {
-    participant: {
+    current_study: {
       attempted_contact_date: {
         required
       },
