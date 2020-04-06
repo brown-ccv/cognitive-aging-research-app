@@ -13,7 +13,9 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in attempts" v-bind:key="'attempt' + index">
-            <td>{{ item.attempted_contact_date }}</td>
+            <td>
+              {{ item.attempted_contact_date.seconds | moment('DD/MMM/YYYY') }}
+            </td>
             <td>{{ item.contact_method }}</td>
             <td>{{ item.participant_responded }}</td>
             <td>{{ item.participant_response }}</td>

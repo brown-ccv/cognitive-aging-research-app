@@ -15,8 +15,14 @@
         <tbody>
           <tr v-for="(item, index) in studies" v-bind:key="'study' + index">
             <td>{{ item.study.name }}</td>
-            <td>{{ item.participation_start_date }}</td>
-            <td>{{ item.participation_end_date }}</td>
+            <td>
+              {{
+                item.participation_start_date.seconds | moment('DD/MMM/YYYY')
+              }}
+            </td>
+            <td>
+              {{ item.participation_end_date.seconds | moment('DD/MMM/YYYY') }}
+            </td>
             <td>{{ item.notes }}</td>
             <td></td>
             <td>
@@ -30,7 +36,6 @@
           </tr>
         </tbody>
       </table>
-      <button class="button is-info">Enroll in New Study</button>
     </div>
   </div>
 </template>

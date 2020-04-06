@@ -3,6 +3,9 @@
     <aside class="two-column-grid-side">
       <ParticipantInfo :participant="participant" />
       <StudiesInfo :studies="participant_studies" @studyId="getStudyId" />
+      <button class="button is-info add-button" type="button">
+        Enroll in New Study
+      </button>
     </aside>
     <main class="two-column-grid-main content">
       <div v-if="current_study.study">
@@ -11,7 +14,11 @@
             :study="current_study.study.name"
             :attempts="contact_attempts"
           />
-          <button class="button is-info" @click="toggleAddView">
+          <button
+            class="button is-info add-button"
+            @click="toggleAddView"
+            type="button"
+          >
             Add an Attempt to Contact
           </button>
         </div>
@@ -28,8 +35,8 @@
 
 <script>
 import store from '@/store/index'
-import { mapState } from 'vuex'
 
+import { mapState } from 'vuex'
 import ParticipantInfo from '@/components/ParticipantInfo'
 import StudiesInfo from '@/components/StudiesInfo'
 import ContactAttempts from '@/components/ContactAttempts'
@@ -84,6 +91,8 @@ export default {
 </script>
 
 <style lang="sass">
+.add-button
+  margin-top: 1rem
 .two-column-grid
     display: grid
     grid-template-areas: "side . main"
