@@ -6,6 +6,7 @@ export default {
   state: {
     participants: [],
     participant_studies: [],
+    contact_attempts: [],
     studies: [],
     participant: {},
     study: {}
@@ -33,6 +34,17 @@ export default {
           .collection('study_list')
       )
     }),
+    bindContactAttempts: firestoreAction(({ bindFirestoreRef }, ids) => {
+      return bindFirestoreRef(
+        'contact_attempts',
+        db
+          .collection('participants')
+          .doc(ids.participant)
+          .collection('study_list')
+          .doc(ids.study)
+          .collection('contact_attempts')
+      )
+    }),
     createParticipant: firestoreAction((context, data) => {
       // return the promise so we can await the write
       return db.collection('participants').add({
@@ -42,14 +54,24 @@ export default {
         email: data.email,
         contact_preference: data.contact_preference,
         sex_at_birth: data.sex_at_birth,
-        preferred_time_of_contact: data.preferred_time_of_contact,
-        study: data.study,
-        attempted_contact_date: data.attempted_contact_date,
-        contact_method: data.contact_method,
-        participant_response: data.participant_response,
-        participated_start_date: data.participated_start_date,
-        participated_end_date: data.participated_end_date
+        preferred_time_of_contact: data.preferred_time_of_contact
       })
+    }),
+    createAttempt: firestoreAction((context, data) => {
+      return db
+        .collection('participants')
+        .doc(data.participantId)
+        .collection('study_list')
+        .doc(data.studyId)
+        .collection('contact_attempts')
+        .add({
+          attempted_contact_date: data.attempted_contact_date,
+          contact_method: data.contact_method,
+          participant_responded: data.participant_responded,
+          participant_response: data.participant_response,
+          created_by: context.rootState.user,
+          date_created: new Date()
+        })
     }),
     setParticipant: ({ commit }, id) => {
       return db
@@ -63,7 +85,6 @@ export default {
         })
     },
     updateParticipant: firestoreAction((context, data) => {
-      console.log(data)
       return db
         .collection('participants')
         .doc(data.id)

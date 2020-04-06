@@ -1,0 +1,30 @@
+.dashboard-grid
+  display: grid
+  grid-template-areas: ". studies . participants ." ". recruit . participants ."
+  grid-template-columns: 1fr 6fr 1fr 4fr 1fr
+  grid-template-rows: auto auto
+  &-studies
+    grid-area: studies
+  &-recruit
+    grid-area: recruit
+  &-participants
+    grid-area: participants
+
+.studies-title
+  display: flex
+  align-content: center
+  background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(81, 52, 178), rgb(177, 117, 235)) repeat scroll 0% 0%
+  margin-bottom: 1rem
+  padding: 1rem
+  border-radius: 3px
+  span
+    color: white
+    margin-bottom: 0
+.new-study
+  margin-left: 1rem
+  padding-top: 0.4rem
+
+.study-table
+  padding: 1rem
+  border-radius: 3px
+  font-size: 0.8rem
