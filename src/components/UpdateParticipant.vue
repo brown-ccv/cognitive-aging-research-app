@@ -3,9 +3,29 @@
     <aside class="two-column-grid-side">
       <ParticipantInfo :participant="participant" />
       <StudiesInfo :studies="participant_studies" @studyId="getStudyId" />
-      <button class="button is-info add-button" type="button">
-        Enroll in New Study
-      </button>
+
+      <form v-on:submit.prevent="submitForm">
+        <div class="field-inline">
+          <div class="field add-button">
+            <div class="control">
+              <div class="select">
+                <select v-model="studyToEnroll">
+                  <option
+                    v-for="(option, index) in notInStudies"
+                    v-bind:value="option.id"
+                    v-bind:key="index"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="button is-info">
+            Enroll in New Study
+          </button>
+        </div>
+      </form>
     </aside>
     <main class="two-column-grid-main content">
       <div v-if="current_study.study">
@@ -53,11 +73,13 @@ export default {
   data() {
     return {
       studyId: '',
-      viewDetails: true
+      viewDetails: true,
+      studyToEnroll: ''
     }
   },
   computed: {
     ...mapState('firebase', [
+      'studies',
       'participant',
       'participant_studies',
       'contact_attempts'
@@ -68,6 +90,17 @@ export default {
       )
       const selected = filtered.length > 0 ? filtered[0] : {}
       return selected
+    },
+    form() {
+      return {
+        participantId: this.participant.id,
+        studyId: this.studyToEnroll
+      }
+    },
+    notInStudies() {
+      const inStudies = this.participant_studies.map(study => study.study.id)
+      const difference = this.studies.filter(x => !inStudies.includes(x.id))
+      return difference
     }
   },
   methods: {
@@ -86,6 +119,12 @@ export default {
       if (value) {
         this.viewDetails = true
       }
+    },
+    updateValue(event) {
+      this.form.studyId = event.target.value
+    },
+    submitForm() {
+      this.$store.dispatch('firebase/addParticipantStudy', this.form)
     }
   }
 }

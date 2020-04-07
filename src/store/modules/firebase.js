@@ -85,7 +85,6 @@ export default {
         })
     },
     updateParticipantStudy: firestoreAction((context, data) => {
-      console.log(data)
       return db
         .collection('participants')
         .doc(data.participantId)
@@ -100,6 +99,18 @@ export default {
         })
         .then(() => {
           console.log('participant updated!')
+        })
+    }),
+    addParticipantStudy: firestoreAction((context, data) => {
+      console.log(data)
+      return db
+        .collection('participants')
+        .doc(data.participantId)
+        .collection('study_list')
+        .add({
+          study: `/studies/${data.studyId}`,
+          created_by: context.rootState.user,
+          date_created: new Date()
         })
     }),
     // Studies actions
