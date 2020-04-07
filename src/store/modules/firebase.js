@@ -84,12 +84,19 @@ export default {
           commit('SET_PARTICIPANT', participant)
         })
     },
-    updateParticipant: firestoreAction((context, data) => {
+    updateParticipantStudy: firestoreAction((context, data) => {
+      console.log(data)
       return db
         .collection('participants')
-        .doc(data.id)
+        .doc(data.participantId)
+        .collection('study_list')
+        .doc(data.studyId)
         .update({
-          attempted_contact_date: data.attempted_contact_date
+          notes: data.notes,
+          participation_start_date: data.start_date,
+          participation_end_date: data.end_date,
+          date_updated: new Date(),
+          updated_by: context.rootState.user
         })
         .then(() => {
           console.log('participant updated!')
@@ -120,7 +127,6 @@ export default {
         })
     },
     updateStudy: firestoreAction((context, data) => {
-      console.log(data)
       return db
         .collection('studies')
         .doc(data.id)

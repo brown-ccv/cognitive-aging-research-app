@@ -13,7 +13,8 @@
                 <div class="select">
                   <datepicker
                     input-class="datepicker-input"
-                    v-model="study.participation_start_date.seconds"
+                    v-model="form.start_date.seconds"
+                    :format="dateFormat"
                     name="attempted_contact"
                   ></datepicker>
                 </div>
@@ -25,7 +26,8 @@
                 <div class="select">
                   <datepicker
                     input-class="datepicker-input"
-                    v-model="study.participation_end_date.seconds"
+                    v-model="form.end_date.seconds"
+                    :format="dateFormat"
                     name="attempted_contact"
                   ></datepicker>
                 </div>
@@ -39,11 +41,10 @@
             id="notes"
             cols="30"
             rows="10"
-            :placeholder="study.notes"
-            v-model="study.notes"
+            v-model="form.notes"
           ></textarea>
         </fieldset>
-        <button type="button" class="button is-success ">
+        <button class="button is-success ">
           Save
         </button>
       </form>
@@ -74,19 +75,44 @@
 
 <script>
 import Datepicker from 'vuejs-datepicker'
+import moment from 'moment'
 
 export default {
   components: {
     Datepicker
   },
+  computed: {
+    form() {
+      return {
+        participantId: this.participantId,
+        studyId: this.study.id,
+        start_date: this.study.participation_start_date,
+        end_date: this.study.participation_end_date,
+        notes: this.study.notes
+      }
+    }
+  },
   props: {
-    study: {
+    participantId: {
       type: String,
+      required: true
+    },
+    study: {
+      type: Object,
       required: true
     },
     attempts: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    dateFormat(date) {
+      return moment(date).format('DD/MMM/YYYY')
+    },
+    submitForm() {
+      console.log('submitted')
+      this.$store.dispatch('firebase/updateParticipantStudy', this.form)
     }
   }
 }

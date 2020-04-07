@@ -10,8 +10,9 @@
     <main class="two-column-grid-main content">
       <div v-if="current_study.study">
         <div v-if="viewDetails">
-          <ContactAttempts
+          <UpdateParticipantStudy
             :study="current_study"
+            :participantId="participant.id"
             :attempts="contact_attempts"
           />
           <button
@@ -39,14 +40,14 @@ import store from '@/store/index'
 import { mapState } from 'vuex'
 import ParticipantInfo from '@/components/ParticipantInfo'
 import StudiesInfo from '@/components/StudiesInfo'
-import ContactAttempts from '@/components/ContactAttempts'
+import UpdateParticipantStudy from '@/components/UpdateParticipantStudy'
 import AddAttempt from '@/components/AddAttempt'
 
 export default {
   components: {
     ParticipantInfo,
     StudiesInfo,
-    ContactAttempts,
+    UpdateParticipantStudy,
     AddAttempt
   },
   data() {
