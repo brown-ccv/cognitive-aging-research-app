@@ -11,7 +11,7 @@
       <div v-if="current_study.study">
         <div v-if="viewDetails">
           <ContactAttempts
-            :study="current_study.study.name"
+            :study="current_study"
             :attempts="contact_attempts"
           />
           <button
