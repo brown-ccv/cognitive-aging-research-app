@@ -102,15 +102,18 @@ export default {
         })
     }),
     addParticipantStudy: firestoreAction((context, data) => {
-      console.log(data)
+      const study = db.collection('studies').doc(data.studyId)
       return db
         .collection('participants')
         .doc(data.participantId)
         .collection('study_list')
         .add({
-          study: `/studies/${data.studyId}`,
+          study: study,
           created_by: context.rootState.user,
-          date_created: new Date()
+          date_created: new Date(),
+          notes: '',
+          participation_start_date: '',
+          participation_end_date: ''
         })
     }),
     // Studies actions
