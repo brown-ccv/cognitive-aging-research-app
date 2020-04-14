@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Dashboard from '@/views/private/Dashboard.vue'
 import Edit from '@/views/private/Edit.vue'
 import Home from '@/views/Home.vue'
-import Enroll from '@/views/Enroll.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import NewStudy from '@/views/private/NewStudy.vue'
@@ -20,11 +19,6 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home
-  },
-  {
-    path: '/enroll',
-    name: 'enroll',
-    component: Enroll
   },
   {
     path: '/login',

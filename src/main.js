@@ -30,7 +30,18 @@ requireComponent.keys().forEach(fileName => {
 // FontAwesome icon registration
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheck, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCheck,
+  faExclamationCircle,
+  faHome,
+  faTachometerAlt,
+  faUsers,
+  faIdCard,
+  faBars,
+  faSignOutAlt,
+  faSignInAlt,
+  faAngleDoubleRight
+} from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -38,6 +49,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faCheck)
 library.add(faExclamationCircle)
 library.add(faGoogle)
+library.add(faHome)
+library.add(faTachometerAlt)
+library.add(faUsers)
+library.add(faIdCard)
+library.add(faBars)
+library.add(faSignOutAlt)
+library.add(faSignInAlt)
+library.add(faAngleDoubleRight)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

@@ -129,34 +129,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-.add-button
-  margin-top: 1rem
-.two-column-grid
-    display: grid
-    grid-template-areas: "side . main"
-    grid-template-columns: 6fr 0.2fr 8fr
-    grid-template-rows: auto
-    &-side
-        grid-area: side
-        padding: 1rem
-    &-main
-        grid-area: main
-        padding: 1rem
-
-.field-inline
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
-  justify-content: flex-start
-  .field
-    margin-right: 2rem
-
-.datepicker-input
-  font-size: 0.9rem
-  height: 2.4rem
-  padding: 0.8rem
-  border-radius: 4px
-  border: 1px solid gray
-</style>

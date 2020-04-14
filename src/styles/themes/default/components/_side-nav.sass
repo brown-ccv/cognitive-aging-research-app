@@ -1,0 +1,64 @@
+$active-width: 14rem
+$collapsed-width: 3rem
+
+.side-navbar-item.collapsed
+  display: flex !important
+  justify-content: center !important
+
+.main-layout
+  display: flex
+  flex-direction: row
+
+.nav-handle-outer
+    display: flex
+    justify-content: flex-end
+    width: 100%
+.nav-handle
+    margin-top: 0
+    background-color: transparent
+    border: none
+.side-navigation
+    height: 100vh
+    width: $collapsed-width
+    @extend .has-background-success
+.side-navigation.active
+    width: $active-width
+.nav-icon.active
+    margin-right: 1rem
+    margin-left: 2rem
+
+.router-view
+  margin-left: $collapsed-width
+  padding: 2rem
+.router-view.active
+  margin-left: $active-width
+.sidebar
+  height: 100%
+  position: fixed
+  z-index: 1
+  top: 0
+  left: 0
+  overflow-x: hidden
+
+.sign-button
+    background-color: transparent
+    border: none
+    margin-top: 0
+    padding: 0
+    @extend .button
+
+.sign-button-outter
+    @extend .button
+    margin-left: 0
+    margin-right: 0
+    padding-right: 0
+    padding-left: 0
+
+.sign-button-outter.active
+    margin-left: 3rem
+    margin-right: 3rem
+    padding-right: 3rem
+
+
+
+
