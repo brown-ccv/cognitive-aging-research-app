@@ -40,7 +40,8 @@ import {
   faBars,
   faSignOutAlt,
   faSignInAlt,
-  faAngleDoubleRight
+  faAngleDoubleRight,
+  faSort
 } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
@@ -57,6 +58,7 @@ library.add(faBars)
 library.add(faSignOutAlt)
 library.add(faSignInAlt)
 library.add(faAngleDoubleRight)
+library.add(faSort)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

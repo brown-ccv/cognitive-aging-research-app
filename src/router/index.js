@@ -18,7 +18,10 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: {
+      title: 'Register'
+    }
   },
   {
     path: '/login',
@@ -43,7 +46,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/edit/:participantId',
+    path: '/edit/:id',
     name: 'edit',
     component: Edit,
     meta: { requiresAuth: true }
@@ -55,7 +58,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/update_study/:studyId',
+    path: '/update_study/:id',
     name: 'update_study',
     component: UpdateStudy,
     meta: { requiresAuth: true }
@@ -69,6 +72,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  document.title =
+    `${to.meta.title} | Cognitive Research at Brown` ||
+    'Cognitive Research at Brown'
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const isAuthenticated = firebase.auth().currentUser
   if (requiresAuth && !isAuthenticated) {
