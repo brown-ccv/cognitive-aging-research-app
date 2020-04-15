@@ -23,6 +23,7 @@
     "bulma-checkradio": "^1.1.1",
     "core-js": "^3.6.4",
     "firebase": "^7.6.2",
+    "keycloak-js": "^9.0.3",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "vue": "^2.6.11",
