@@ -45,7 +45,11 @@
     </div>
     <div class="study-table">
       <p class="title">Contact Attempts</p>
+      <p v-if="contact_attempts.length === 0" class="subtitle">
+        {{ participant.name }} has not been contacted about this study yet.
+      </p>
       <BaseTable
+        v-else
         id="contact-attempts"
         :tabledata="cleanAttempts"
         :headings="[
@@ -64,11 +68,14 @@
 <script>
 import moment from 'moment'
 import AddAttempt from '@/components/AddAttempt'
+import { mapState } from 'vuex'
+
 export default {
   components: {
     AddAttempt
   },
   computed: {
+    ...mapState('firebase', ['participant', 'contact_attempts']),
     form() {
       return {
         participantId: this.participantId,
@@ -117,6 +124,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import 'bulma'
 .study-table
   margin-top: 2rem
+.subtitle
+  color: $link
+  line-height: 4rem
 </style>

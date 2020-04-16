@@ -12,7 +12,6 @@ export default {
   components: {
     UpdateStudy
   },
-
   created() {
     store.dispatch('firebase/setStudy', this.$route.params.id)
   }

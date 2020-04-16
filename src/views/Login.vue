@@ -26,12 +26,12 @@
           :valid="!$v.password.$invalid"
         >
         </BaseInput>
-        <button class="button is-success" type="submit">Login</button>
+        <button class="button is-primary" type="submit">Login</button>
       </form>
       <h1 class="mt-1">OR</h1>
       <div class="mt-1">
         <button
-          class="row button is-success"
+          class="row button is-primary"
           type="submit"
           @click="googleSignOn"
         >

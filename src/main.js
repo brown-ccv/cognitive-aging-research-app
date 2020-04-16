@@ -7,6 +7,9 @@ import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 Vue.use(VueReCaptcha, { siteKey: '6LfYQeEUAAAAAEeaM78FpwAD3VC_9zIQO_ybYwoa' })
 
+// import nprogress css
+import 'nprogress/nprogress.css'
+
 // Global registration for components starting with Base
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
