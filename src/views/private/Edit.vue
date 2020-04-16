@@ -13,11 +13,8 @@ export default {
     UpdateParticipant
   },
   created() {
-    store.dispatch(
-      'firebase/bindParticipantStudies',
-      this.$route.params.participantId
-    )
-    store.dispatch('firebase/setParticipant', this.$route.params.participantId)
+    store.dispatch('firebase/bindParticipantStudies', this.$route.params.id)
+    store.dispatch('firebase/setParticipant', this.$route.params.id)
   }
 }
 </script>

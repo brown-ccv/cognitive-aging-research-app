@@ -3,10 +3,9 @@ import VueRouter from 'vue-router'
 import Dashboard from '@/views/private/Dashboard.vue'
 import Edit from '@/views/private/Edit.vue'
 import Home from '@/views/Home.vue'
-import Enroll from '@/views/Enroll.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
-import NewStudy from '@/views/private/NewStudy.vue'
+import Studies from '@/views/private/Studies.vue'
 import UpdateStudy from '@/views/private/UpdateStudy.vue'
 import Participants from '@/views/private/Participants.vue'
 
@@ -19,52 +18,56 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
-  },
-  {
-    path: '/enroll',
-    name: 'enroll',
-    component: Enroll
+    component: Home,
+    meta: {
+      title: 'Register'
+    }
   },
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: {
+      title: 'Login'
+    }
   },
   {
     path: '/register',
     name: 'register',
-    component: Register
+    component: Register,
+    meta: {
+      title: 'Register'
+    }
   },
   {
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, title: 'Dashboard' }
   },
   {
     path: '/participants',
     name: 'participants',
     component: Participants,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, title: 'Participants' }
   },
   {
-    path: '/edit/:participantId',
+    path: '/edit/:id',
     name: 'edit',
     component: Edit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, title: 'Update Participant' }
   },
   {
-    path: '/new_study',
-    name: 'new_study',
-    component: NewStudy,
-    meta: { requiresAuth: true }
+    path: '/studies',
+    name: 'studies',
+    component: Studies,
+    meta: { requiresAuth: true, title: 'Add New Study' }
   },
   {
-    path: '/update_study/:studyId',
+    path: '/update_study/:id',
     name: 'update_study',
     component: UpdateStudy,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, title: 'Update Study' }
   }
 ]
 
@@ -75,6 +78,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  document.title =
+    `${to.meta.title} | Cognitive Research at Brown` ||
+    'Cognitive Research at Brown'
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const isAuthenticated = firebase.auth().currentUser
   if (requiresAuth && !isAuthenticated) {

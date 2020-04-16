@@ -54,7 +54,8 @@ export default {
         email: data.email,
         contact_preference: data.contact_preference,
         sex_at_birth: data.sex_at_birth,
-        preferred_time_of_contact: data.preferred_time_of_contact
+        preferred_time_of_contact: data.preferred_time_of_contact,
+        date_created: Date.now()
       })
     }),
     createAttempt: firestoreAction((context, data) => {
@@ -70,7 +71,7 @@ export default {
           participant_responded: data.participant_responded,
           participant_response: data.participant_response,
           created_by: context.rootState.user,
-          date_created: new Date()
+          date_created: Date.now()
         })
     }),
     setParticipant: ({ commit }, id) => {
@@ -85,6 +86,7 @@ export default {
         })
     },
     updateParticipantStudy: firestoreAction((context, data) => {
+      console.log(data)
       return db
         .collection('participants')
         .doc(data.participantId)
@@ -92,9 +94,9 @@ export default {
         .doc(data.studyId)
         .update({
           notes: data.notes,
-          participation_start_date: data.start_date,
-          participation_end_date: data.end_date,
-          date_updated: new Date(),
+          participation_start_date: data.start_date.seconds,
+          participation_end_date: data.end_date.seconds,
+          date_updated: Date.now(),
           updated_by: context.rootState.user
         })
         .then(() => {
@@ -110,7 +112,7 @@ export default {
         .add({
           study: study,
           created_by: context.rootState.user,
-          date_created: new Date(),
+          date_created: Date.now(),
           notes: '',
           participation_start_date: '',
           participation_end_date: ''
@@ -125,7 +127,7 @@ export default {
         name: data.name,
         pi: data.pi,
         grant_number: data.grant_number,
-        date_created: new Date(),
+        date_created: Date.now(),
         created_by: context.rootState.user
       })
     }),
@@ -149,7 +151,7 @@ export default {
           pi: data.pi,
           grant_number: data.grant_number,
           updated_by: context.rootState.user,
-          date_updated: new Date()
+          date_updated: Date.now()
         })
         .then(() => {
           console.log('study updated!')

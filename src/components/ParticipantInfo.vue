@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="studies-title">
-      <span class="title">Participant Profile</span>
+    <div>
+      <p class="title">Participant Profile</p>
     </div>
-    <article class="panel is-success content">
+    <article>
       <div class="info-group">
         <aside class="info-group-aside has-background-light">
           <div class="info-group-item">
@@ -76,6 +76,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import 'bulma'
 .panel-heading
     margin-bottom: 0
 .tag
@@ -83,6 +84,11 @@ export default {
 .info-group
     display: grid
     grid-template-areas: "aside main"
+    grid-template-columns: 2fr 2fr
+    border: 1px solid $primary
+    border-radius: 3px
+    width: 80%
+    margin-top: 2rem
     &-aside
         text-transform: uppercase
         font-size: 0.7rem

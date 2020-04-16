@@ -1,10 +1,10 @@
 <template>
   <div>
     <template v-if="loggedIn">
-      <button class="button is-warning" @click="signOut">Sign Out</button>
+      <button class="sign-button" @click="signOut">Sign Out</button>
     </template>
     <span v-else>
-      <router-link class="button is-success" to="/login">Sign In</router-link>
+      <router-link class="sign-button" to="/login">Sign In</router-link>
     </span>
   </div>
 </template>

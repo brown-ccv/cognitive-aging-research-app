@@ -30,7 +30,24 @@ requireComponent.keys().forEach(fileName => {
 // FontAwesome icon registration
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheck, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCheck,
+  faExclamationCircle,
+  faHome,
+  faTachometerAlt,
+  faUsers,
+  faIdCard,
+  faBars,
+  faSignOutAlt,
+  faSignInAlt,
+  faAngleDoubleRight,
+  faSort,
+  faCaretLeft,
+  faCaretRight,
+  faFilter,
+  faCalendar,
+  faUserPlus
+} from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -38,6 +55,20 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faCheck)
 library.add(faExclamationCircle)
 library.add(faGoogle)
+library.add(faHome)
+library.add(faTachometerAlt)
+library.add(faUsers)
+library.add(faIdCard)
+library.add(faBars)
+library.add(faSignOutAlt)
+library.add(faSignInAlt)
+library.add(faAngleDoubleRight)
+library.add(faSort)
+library.add(faCaretRight)
+library.add(faCaretLeft)
+library.add(faFilter)
+library.add(faCalendar)
+library.add(faUserPlus)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

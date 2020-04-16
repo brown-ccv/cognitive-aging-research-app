@@ -1,42 +1,31 @@
 <template>
   <div>
     <div class="studies-title">
-      <span class="title">Participant Studies</span>
+      <h1 class="title">Participant Studies</h1>
     </div>
-    <div class="study-table card">
-      <table class="table">
-        <thead>
-          <th class="has-text-success">Study</th>
-          <th class="has-text-success">Start Date</th>
-          <th class="has-text-success">End Date</th>
-          <th class="has-text-success">Notes</th>
-          <th class="has-text-success"></th>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in studies" v-bind:key="'study' + index">
-            <td>{{ item.study.name }}</td>
-            <td>
-              {{
-                item.participation_start_date.seconds | moment('DD/MMM/YYYY')
-              }}
-            </td>
-            <td>
-              {{ item.participation_end_date.seconds | moment('DD/MMM/YYYY') }}
-            </td>
-            <td>{{ item.notes }}</td>
-            <td></td>
-            <td>
-              <button
-                class="button is-primary"
-                @click="selectStudy(item.study)"
-              >
-                View
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <main class="studies">
+      <div
+        v-for="(item, index) in studies"
+        v-bind:key="'study' + index"
+        class="study-card"
+      >
+        <div class="study-title">{{ item.study.name }}</div>
+        <div class="study-content">
+          <p v-show="item.participation_start_date" class="small">
+            <span>start date: </span>{{ item.participation_start_date }}
+          </p>
+          <p v-show="item.participation_end_date" class="small">
+            <span>start date: </span>{{ item.participation_end_date }}
+          </p>
+          <button
+            class="button is-link is-small"
+            @click="selectStudy(item.study)"
+          >
+            Details
+          </button>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -56,4 +45,31 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="sass">
+@import 'bulma'
+.studies-title
+  margin-top: 3rem
+.studies
+  display: flex
+  flex-wrap: wrap
+  justify-content: flex-start
+  align-content: center
+  margin-top: 3rem
+.study-card
+  border: 1px solid $primary
+  border-radius: 3px
+  width: 15rem
+  margin-bottom: 2rem
+  margin-right: 2rem
+  padding: 1rem
+.study-title
+  font-size: 1rem
+  @extend .has-text-primary
+  font-weight: bold
+.study-content
+  height: 100%
+  p
+    margin-top: 0.2rem
+  button
+    margin-top: 1.5rem
+</style>

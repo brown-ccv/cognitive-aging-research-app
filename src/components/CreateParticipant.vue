@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-bind:class="{ container: !loggedIn }">
     <label for="participant-form" class="label is-large"
       >Personal Information</label
     >
@@ -124,7 +124,7 @@
 import store from '@/store/index'
 import { validationMixin } from 'vuelidate'
 import { email, numeric, required, requiredIf } from 'vuelidate/lib/validators'
-
+import { mapState } from 'vuex'
 export default {
   mixins: [validationMixin],
   validations: {
@@ -200,6 +200,9 @@ export default {
       submission_error: ''
     }
   },
+  computed: {
+    ...mapState(['loggedIn'])
+  },
   methods: {
     submitForm: async function() {
       await this.$recaptchaLoaded()
@@ -220,13 +223,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass" scoped>
-.field-inline
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
-  justify-content: flex-start
-  .field
-    margin-right: 2rem
-</style>

@@ -1,15 +1,15 @@
 <template>
-  <div class="two-column-grid">
-    <aside class="two-column-grid-side">
+  <div>
+    <aside>
       <ParticipantInfo :participant="participant" />
       <StudiesInfo :studies="participant_studies" @studyId="getStudyId" />
-
-      <form v-on:submit.prevent="submitForm">
-        <div class="field-inline">
+      <form v-if="notInStudies.length > 0" v-on:submit.prevent="submitForm">
+        <div class="study-card">
+          <label class="label" for="enroll">Enroll in Study</label>
           <div class="field add-button">
             <div class="control">
               <div class="select">
-                <select v-model="studyToEnroll">
+                <select id="enroll" v-model="studyToEnroll">
                   <option
                     v-for="(option, index) in notInStudies"
                     v-bind:value="option.id"
@@ -21,13 +21,13 @@
               </div>
             </div>
           </div>
-          <button class="button is-info">
-            Enroll in New Study
+          <button class="button is-info is-small">
+            Enroll
           </button>
         </div>
       </form>
     </aside>
-    <main class="two-column-grid-main content">
+    <main class="">
       <div v-if="current_study.study">
         <div v-if="viewDetails">
           <UpdateParticipantStudy
@@ -35,20 +35,7 @@
             :participantId="participant.id"
             :attempts="contact_attempts"
           />
-          <button
-            class="button is-info add-button"
-            @click="toggleAddView"
-            type="button"
-          >
-            Add an Attempt to Contact
-          </button>
         </div>
-        <AddAttempt
-          v-else
-          :current_study="current_study"
-          :participantId="participant.id"
-          @success="isSuccess"
-        />
       </div>
     </main>
   </div>
@@ -61,14 +48,12 @@ import { mapState } from 'vuex'
 import ParticipantInfo from '@/components/ParticipantInfo'
 import StudiesInfo from '@/components/StudiesInfo'
 import UpdateParticipantStudy from '@/components/UpdateParticipantStudy'
-import AddAttempt from '@/components/AddAttempt'
 
 export default {
   components: {
     ParticipantInfo,
     StudiesInfo,
-    UpdateParticipantStudy,
-    AddAttempt
+    UpdateParticipantStudy
   },
   data() {
     return {
@@ -129,34 +114,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-.add-button
-  margin-top: 1rem
-.two-column-grid
-    display: grid
-    grid-template-areas: "side . main"
-    grid-template-columns: 6fr 0.2fr 8fr
-    grid-template-rows: auto
-    &-side
-        grid-area: side
-        padding: 1rem
-    &-main
-        grid-area: main
-        padding: 1rem
-
-.field-inline
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
-  justify-content: flex-start
-  .field
-    margin-right: 2rem
-
-.datepicker-input
-  font-size: 0.9rem
-  height: 2.4rem
-  padding: 0.8rem
-  border-radius: 4px
-  border: 1px solid gray
-</style>
