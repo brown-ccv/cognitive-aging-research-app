@@ -41,7 +41,12 @@ import {
   faSignOutAlt,
   faSignInAlt,
   faAngleDoubleRight,
-  faSort
+  faSort,
+  faCaretLeft,
+  faCaretRight,
+  faFilter,
+  faCalendar,
+  faUserPlus
 } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
@@ -59,6 +64,11 @@ library.add(faSignOutAlt)
 library.add(faSignInAlt)
 library.add(faAngleDoubleRight)
 library.add(faSort)
+library.add(faCaretRight)
+library.add(faCaretLeft)
+library.add(faFilter)
+library.add(faCalendar)
+library.add(faUserPlus)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

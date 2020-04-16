@@ -1,7 +1,10 @@
 <template>
   <div>
     <BaseNavBar v-if="!loggedIn" />
-    <CreateParticipant class="main-section" />
+    <h1 v-show="loggedIn" class="title">
+      Add New Participant
+    </h1>
+    <CreateParticipant />
   </div>
 </template>
 

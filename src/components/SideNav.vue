@@ -15,20 +15,6 @@
         <router-link
           class="side-navbar-item"
           v-bind:class="{ collapsed: !active }"
-          to="/"
-        >
-          <font-awesome-icon
-            class="nav-icon"
-            v-bind:class="{ active: active }"
-            icon="home"
-          />
-          <span v-show="active">Home</span></router-link
-        >
-      </li>
-      <li>
-        <router-link
-          class="side-navbar-item"
-          v-bind:class="{ collapsed: !active }"
           to="/dashboard"
         >
           <font-awesome-icon
@@ -57,7 +43,21 @@
         <router-link
           class="side-navbar-item"
           v-bind:class="{ collapsed: !active }"
-          to="/new_study"
+          to="/"
+        >
+          <font-awesome-icon
+            class="nav-icon"
+            v-bind:class="{ active: active }"
+            icon="user-plus"
+          />
+          <span v-show="active">Add Participant</span></router-link
+        >
+      </li>
+      <li>
+        <router-link
+          class="side-navbar-item"
+          v-bind:class="{ collapsed: !active }"
+          to="/studies"
         >
           <font-awesome-icon
             class="nav-icon"

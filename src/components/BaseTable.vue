@@ -1,47 +1,75 @@
 <template>
   <div class="content">
-    <div v-for="item in filters" v-bind:key="item">
-      <label :for="'input-' + item">Filter by {{ item }}: </label>
-      <input
-        :id="'input-' + item"
-        type="text"
-        v-model="searchObject[item]"
-        :name="item"
-        @keyup="setSearchObject"
-      />
+    <header v-if="filters" class="table-header">
+      <div v-for="item in filters" v-bind:key="item">
+        <div class="filters">
+          <label class="label" :for="'input-' + item"
+            >Filter by {{ item | cleanString }}:
+          </label>
+          <div class="control has-icons-right">
+            <input
+              class="input"
+              :id="'input-' + item"
+              type="text"
+              v-model="searchObject[item]"
+              :name="item"
+              @keyup="setSearchObject"
+            />
+            <span class="icon is-small is-right">
+              <font-awesome-icon icon="filter" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th v-for="item in headings" v-bind:key="'th' + item">
+              <div class="th-wrapper">
+                <p class="th-title">
+                  {{ item | cleanString }}
+                </p>
+                <button type="button" class="sort-button" @click="sort(item)">
+                  <font-awesome-icon icon="sort" />
+                </button>
+              </div>
+            </th>
+            <th v-if="linkto"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in filteredData" v-bind:key="item.id">
+            <td
+              v-for="(key, val) in item"
+              v-bind:key="val"
+              v-bind:class="{ 'id-string': val === 'id' }"
+            >
+              {{ key }}
+            </td>
+
+            <td v-if="linkto">
+              <router-link :to="{ name: linkto, params: { id: item.id } }">
+                Details
+              </router-link>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th v-for="item in headings" v-bind:key="'th' + item">
-            <span
-              >{{ item | cleanString }}
-              <button type="button" @click="sort(item)">
-                <font-awesome-icon icon="sort" /></button
-            ></span>
-          </th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in filteredData" v-bind:key="item.id">
-          <td v-for="(key, val) in item" v-bind:key="val">
-            {{ key }}
-          </td>
-
-          <td>
-            <router-link :to="{ name: linkto, params: { id: item.id } }">
-              Edit
-            </router-link>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <button @click="prevPage">Previous</button>
-      <button @click="nextPage">Next</button>
-    </p>
+    <footer v-show="showPagination" class="table-footer">
+      <p>
+        <button type="button" class="page-button" @click="prevPage">
+          <font-awesome-icon icon="caret-left" size="2x" />
+          <span class="previous">Previous</span>
+        </button>
+        <button type="button" class="page-button" @click="nextPage">
+          <span class="next">Next</span>
+          <font-awesome-icon icon="caret-right" size="2x" />
+        </button>
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -81,6 +109,9 @@ export default {
     }
   },
   computed: {
+    showPagination() {
+      return this.filteredData.length > this.pageSize
+    },
     searchObject: {
       get() {
         let search = {}
@@ -110,11 +141,15 @@ export default {
         })
     },
     filteredData() {
-      return this.sortedData.filter(item => {
-        return item[this.searchingField]
-          .toLowerCase()
-          .includes(this.searchingValue.toLowerCase())
-      })
+      if (this.filters) {
+        return this.sortedData.filter(item => {
+          return item[this.searchingField]
+            .toLowerCase()
+            .includes(this.searchingValue.toLowerCase())
+        })
+      } else {
+        return this.sortedData
+      }
     }
   },
   methods: {
@@ -140,3 +175,46 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+@import 'bulma'
+.table-wrapper
+  border: 1px solid $primary
+  border-radius: 5px
+  padding: 1rem
+.table
+  font-size: 0.8rem
+.th-wrapper
+  display: flex
+  flex-direction: row
+  align-content: center
+  height: 100%
+.th-title
+  margin-bottom: 0 !important
+.sort-button
+  background: none
+  padding: 0
+  border: none
+  margin-left: 0.2rem
+  font-size: 0.7rem
+.table-footer
+  width: 100%
+  display: flex
+  justify-content: center
+.page-button
+  @extend .button
+  @extend .is-small
+  @extend .is-link
+  @extend .is-outlined
+  margin: 1rem
+  .next
+    margin-right: 1rem
+  .previous
+    margin-left: 1rem
+.filters
+  @extend .field
+  width: 40%
+  margin-bottom: 2rem
+.id-string
+  font-size: 0.6rem
+  font-family: monospace
+</style>

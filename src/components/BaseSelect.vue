@@ -4,7 +4,7 @@
     <div class="field">
       <div class="control">
         <div class="select">
-          <select :name="label" :id="id" @input="updateValue" v-bind="$attrs">
+          <select :name="label" :id="id" @input="updateValue">
             <option
               v-for="opt in options"
               :key="opt"

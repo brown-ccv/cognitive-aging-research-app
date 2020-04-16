@@ -1,7 +1,7 @@
 <template>
   <div>
-    <main class="container content">
-      <h1>{{ study.name }}</h1>
+    <main>
+      <h1 class="title">{{ study.name }}</h1>
       <form id="study-update-form" v-on:submit.prevent="submitForm">
         <BaseInput
           id="name"

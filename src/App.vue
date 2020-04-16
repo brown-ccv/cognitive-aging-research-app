@@ -26,6 +26,8 @@ export default {
   },
   created() {
     this.loginStatus()
+    store.dispatch('firebase/bindStudies')
+    store.dispatch('firebase/bindParticipants')
   },
   computed: {
     ...mapState(['loggedIn', 'user'])

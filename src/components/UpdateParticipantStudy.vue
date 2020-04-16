@@ -1,36 +1,30 @@
 <template>
   <div>
-    <div class="studies-title">
-      <span class="title">{{ study.study.name }}</span>
-    </div>
-    <div class="card study-table">
+    <span class="title">{{ study.study.name }}</span>
+    <div class="study-table">
       <form v-on:submit.prevent="submitForm">
         <fieldset class="fieldset">
           <div class="field-inline">
-            <div class="field">
-              <div class="control">
-                <label class="label">Start Date</label>
-                <div class="select">
-                  <datepicker
-                    input-class="datepicker-input"
-                    v-model="form.start_date.seconds"
-                    :format="dateFormat"
-                    name="attempted_contact"
-                  ></datepicker>
-                </div>
+            <div class="field field-date">
+              <label class="label">Start Date: {{ form.start_date }}</label>
+              <div class="control has-icons-right">
+                <input
+                  class="date-input"
+                  type="date"
+                  v-model="form.start_date"
+                />
+                <span class="icon is-small is-right">
+                  <font-awesome-icon icon="calendar" />
+                </span>
               </div>
             </div>
-            <div class="field">
-              <div class="control">
-                <label class="label">End Date</label>
-                <div class="select">
-                  <datepicker
-                    input-class="datepicker-input"
-                    v-model="form.end_date.seconds"
-                    :format="dateFormat"
-                    name="attempted_contact"
-                  ></datepicker>
-                </div>
+            <div class="field field-date">
+              <label class="label">End Date: {{ form.end_date }}</label>
+              <div class="control has-icons-right">
+                <input class="date-input" type="date" v-model="form.end_date" />
+                <span class="icon is-small is-right">
+                  <font-awesome-icon icon="calendar" />
+                </span>
               </div>
             </div>
           </div>
@@ -44,42 +38,35 @@
             v-model="form.notes"
           ></textarea>
         </fieldset>
-        <button class="button is-success ">
+        <button class="button is-primary ">
           Save
         </button>
       </form>
     </div>
-    <div class="study-table card">
-      <h1>Contact Attempts</h1>
-      <table class="table">
-        <thead>
-          <th class="has-text-success">Attempt Date</th>
-          <th class="has-text-success">Method</th>
-          <th class="has-text-success">Participant Responded</th>
-          <th class="has-text-success">Participant Response</th>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in attempts" v-bind:key="'attempt' + index">
-            <td>
-              {{ item.attempted_contact_date.seconds | moment('DD/MMM/YYYY') }}
-            </td>
-            <td>{{ item.contact_method }}</td>
-            <td>{{ item.participant_responded }}</td>
-            <td>{{ item.participant_response }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="study-table">
+      <p class="title">Contact Attempts</p>
+      <BaseTable
+        id="contact-attempts"
+        :tabledata="cleanAttempts"
+        :headings="[
+          'Attempt Date',
+          'Method',
+          'Participant Responded',
+          'Participant Response',
+          'Attempted By'
+        ]"
+      />
     </div>
+    <AddAttempt :current_study="study" :participantId="participantId" />
   </div>
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
-
+import AddAttempt from '@/components/AddAttempt'
 export default {
   components: {
-    Datepicker
+    AddAttempt
   },
   computed: {
     form() {
@@ -90,6 +77,17 @@ export default {
         end_date: this.study.participation_end_date,
         notes: this.study.notes
       }
+    },
+    cleanAttempts() {
+      return this.attempts.map(item => {
+        return {
+          attempted_contact_date: item.attempted_contact_date,
+          contact_method: item.contact_method,
+          participant_responded: item.participant_responded,
+          participant_response: item.participant_response,
+          attempted_by: item.created_by
+        }
+      })
     }
   },
   props: {
@@ -117,3 +115,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.study-table
+  margin-top: 2rem
+</style>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="title">Potential Participants</h1>
     <BaseTable
       :tabledata="reducedData"
       :headings="headings"
@@ -11,12 +12,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import store from '@/store/index'
 
 export default {
-  created() {
-    store.dispatch('firebase/bindParticipants')
-  },
   computed: {
     ...mapState('firebase', ['participants']),
     headings() {

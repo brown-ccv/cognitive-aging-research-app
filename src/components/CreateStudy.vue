@@ -1,8 +1,6 @@
 <template>
-  <div class="container">
-    <label for="participant-form" class="label is-large"
-      >Study Information</label
-    >
+  <div>
+    <label for="participant-form" class="label is-large">Add New Study</label>
 
     <form id="participant-form" v-on:submit.prevent="submitForm">
       <BaseInput

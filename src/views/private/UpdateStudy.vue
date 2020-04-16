@@ -14,7 +14,7 @@ export default {
   },
 
   created() {
-    store.dispatch('firebase/setStudy', this.$route.params.studyId)
+    store.dispatch('firebase/setStudy', this.$route.params.id)
   }
 }
 </script>
