@@ -37,6 +37,7 @@ export default {
         commit('SET_LOGGED_STATUS', !!user, { root: true })
         if (user) {
           commit('SET_USER_STATE', user, { root: true })
+          localStorage.crpuser = user.displayName
         }
       })
     }

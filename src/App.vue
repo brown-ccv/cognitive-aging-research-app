@@ -25,7 +25,7 @@ export default {
     SideNav
   },
   created() {
-    this.loginStatus()
+    store.dispatch('login/loginStatus')
     store.dispatch('firebase/bindStudies')
     store.dispatch('firebase/bindParticipants')
   },
@@ -33,9 +33,6 @@ export default {
     ...mapState(['loggedIn', 'user'])
   },
   methods: {
-    loginStatus() {
-      store.dispatch('login/loginStatus')
-    },
     isActive(value) {
       this.active = value
     }

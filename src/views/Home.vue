@@ -4,14 +4,13 @@
     <h1 v-show="loggedIn" class="title">
       Add New Participant
     </h1>
-    <CreateParticipant />
+    <CreateParticipant v-bind:class="{ 'main-section': !loggedIn }" />
   </div>
 </template>
 
 <script>
 import CreateParticipant from '@/components/CreateParticipant'
 import { mapState } from 'vuex'
-
 export default {
   components: {
     CreateParticipant
@@ -24,5 +23,5 @@ export default {
 
 <style lang="sass">
 .main-section
-  margin-top: 4rem
+  margin-top: 10rem
 </style>

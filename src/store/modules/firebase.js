@@ -94,8 +94,8 @@ export default {
         .doc(data.studyId)
         .update({
           notes: data.notes,
-          participation_start_date: data.start_date.seconds,
-          participation_end_date: data.end_date.seconds,
+          participation_start_date: data.start_date,
+          participation_end_date: data.end_date,
           date_updated: Date.now(),
           updated_by: context.rootState.user
         })
