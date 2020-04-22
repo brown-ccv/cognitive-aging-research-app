@@ -38,7 +38,7 @@
             v-model="form.notes"
           ></textarea>
         </fieldset>
-        <button class="button is-primary ">
+        <button class="button is-primary">
           Save
         </button>
       </form>
@@ -116,14 +116,21 @@ export default {
       return moment(date).format('DD/MMM/YYYY')
     },
     submitForm() {
-      console.log('submitted')
       this.$store.dispatch('firebase/updateParticipantStudy', this.form)
+      if (this.form.start_date != '') {
+        let inStudies = this.participant.in_studies
+        inStudies.push(this.study.study.name)
+        this.$store.dispatch('firebase/addStudyToParticipant', {
+          participantId: this.form.participantId,
+          inStudies: inStudies
+        })
+      }
     }
   }
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import 'bulma'
 .study-table
   margin-top: 2rem

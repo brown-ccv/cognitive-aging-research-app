@@ -34,6 +34,15 @@ export default {
           .collection('study_list')
       )
     }),
+    addStudyToParticipant: firestoreAction((context, data) => {
+      console.log(data)
+      return db
+        .collection('participants')
+        .doc(data.participantId)
+        .update({
+          in_studies: data.inStudies
+        })
+    }),
     bindContactAttempts: firestoreAction(({ bindFirestoreRef }, ids) => {
       return bindFirestoreRef(
         'contact_attempts',
@@ -55,7 +64,8 @@ export default {
         contact_preference: data.contact_preference,
         sex_at_birth: data.sex_at_birth,
         preferred_time_of_contact: data.preferred_time_of_contact,
-        date_created: Date.now()
+        date_created: Date.now(),
+        in_studies: []
       })
     }),
     createAttempt: firestoreAction((context, data) => {
@@ -86,7 +96,6 @@ export default {
         })
     },
     updateParticipantStudy: firestoreAction((context, data) => {
-      console.log(data)
       return db
         .collection('participants')
         .doc(data.participantId)

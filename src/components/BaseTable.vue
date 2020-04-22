@@ -46,7 +46,15 @@
               v-bind:key="val"
               v-bind:class="{ 'id-string': val === 'id' }"
             >
-              {{ key }}
+              <span v-if="typeof key === 'object'">
+                <span
+                  v-for="datum in key"
+                  v-bind:key="datum"
+                  class="cell-item"
+                  >{{ datum }}</span
+                >
+              </span>
+              <span v-else>{{ key }}</span>
             </td>
 
             <td v-if="linkto">
@@ -175,7 +183,7 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
+<style lang="sass">
 @import 'bulma'
 .table-wrapper
   border: 1px solid $primary
@@ -217,4 +225,8 @@ export default {
 .id-string
   font-size: 0.6rem
   font-family: monospace
+.cell-item
+  @extend .tag
+  @extend .is-light
+  margin: 0.2rem
 </style>

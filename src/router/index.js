@@ -49,7 +49,12 @@ const routes = [
     path: '/participants',
     name: 'participants',
     component: Participants,
-    meta: { requiresAuth: true, title: 'Participants' }
+    meta: { requiresAuth: true, title: 'Participants' },
+    query: {
+      start_year: '',
+      end_year: '',
+      studies: []
+    }
   },
   {
     path: '/edit/:id',

@@ -13,7 +13,7 @@ export default {
       type: String
     },
     main: {
-      type: String
+      type: Number
     },
     footer: {
       type: String
