@@ -119,7 +119,10 @@ export default {
       this.$store.dispatch('firebase/updateParticipantStudy', this.form)
       if (this.form.start_date != '') {
         let inStudies = this.participant.in_studies
-        inStudies.push(this.study.study.name)
+        inStudies.push({
+          name: this.study.study.name,
+          start_date: this.form.start_date
+        })
         this.$store.dispatch('firebase/addStudyToParticipant', {
           participantId: this.form.participantId,
           inStudies: inStudies

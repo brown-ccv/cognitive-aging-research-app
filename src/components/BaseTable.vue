@@ -48,10 +48,10 @@
             >
               <span v-if="typeof key === 'object'">
                 <span
-                  v-for="datum in key"
-                  v-bind:key="datum"
+                  v-for="(datum, index) in key"
+                  v-bind:key="'a' + index"
                   class="cell-item"
-                  >{{ datum }}</span
+                  >{{ datum.name }}</span
                 >
               </span>
               <span v-else>{{ key }}</span>

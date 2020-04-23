@@ -1,41 +1,81 @@
 <template>
   <div>
-    {{ selectedStudies }}
     <h1 class="title">Potential Participants</h1>
     <div v-for="(p, i) in participants" v-bind:key="i">
       {{ p.study_list }}
     </div>
     <form v-on:submit.prevent="handleFilter">
-      <input v-model="startYear" class="input" type="text" id="start" />
-      <input v-model="endYear" class="input" type="text" id="end" />
-      <multiselect
-        v-model="selectedStudies"
-        :options="studiesNames"
-        :multiple="true"
-      />
-      <button type="submit">Filter</button>
+      <div class="field-inline">
+        <label for="name" class="filter-label">Filter by Name:</label>
+        <BaseInput id="name" type="text" placeholder="Name" v-model="name" />
+      </div>
+      <div class="field-inline">
+        <h1 class="filter-label">Born between:</h1>
+
+        <BaseInput
+          id="start"
+          type="text"
+          placeholder="year"
+          v-model="startYear"
+        />
+        <p>and</p>
+        <BaseInput id="end" type="text" placeholder="year" v-model="endYear" />
+      </div>
+      <div class="field-inline">
+        <h1 class="filter-label">Participated in Study:</h1>
+        <BaseSelect
+          id="study"
+          :options="studiesNames"
+          v-model="selectedStudy"
+        />
+        <p>in</p>
+        <BaseInput
+          id="studyYear"
+          type="text"
+          placeholder="year"
+          v-model="studyYear"
+        />
+      </div>
+
+      <button class="button is-info filter-button" type="submit">Filter</button>
+      <button
+        class="button is-light filter-button"
+        type="button"
+        @click="reset"
+      >
+        Reset
+      </button>
     </form>
-    <BaseTable :tabledata="reducedData" :headings="headings" linkto="edit" />
+
+    <BaseTable
+      v-if="reducedData.length > 0"
+      :tabledata="reducedData"
+      :headings="headings"
+      linkto="edit"
+    />
+    <div v-else>No results match your search</div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Multiselect from 'vue-multiselect'
 
 export default {
-  components: { Multiselect },
   data() {
     return {
-      selectedStudies: null,
+      selectedStudy: null,
       startYear: null,
-      endYear: null
+      endYear: null,
+      studyYear: null,
+      name: null
     }
   },
   computed: {
     ...mapState('firebase', ['participants', 'studies']),
     studiesNames() {
-      return this.studies.map(study => study.name)
+      const options = this.studies.map(study => study.name)
+      options.unshift('-')
+      return options
     },
     headings() {
       return Object.keys(this.reducedData[0])
@@ -51,11 +91,36 @@ export default {
     filteredParticipants() {
       const queryYearStart = this.$route.query.start_year
       const queryYearEnd = this.$route.query.end_year
-      let start = queryYearStart ? queryYearStart : this.minMaxYear[0]
-      let end = queryYearEnd ? queryYearEnd : this.minMaxYear[1]
+      const queryStudy = this.$route.query.study
+      const queryStudyYear = this.$route.query.study_year
+      const queryName = this.$route.query.name
+
+      const selectedStudy = queryStudy ? queryStudy : false
+      const studyYear = queryStudyYear ? queryStudyYear : false
+      const start = queryYearStart ? queryYearStart : this.minMaxYear[0]
+      const end = queryYearEnd ? queryYearEnd : this.minMaxYear[1]
+      const name = queryName ? queryName.toLowerCase() : false
+
       return this.participants.filter(participant => {
+        const matchStudyYear = participant.in_studies
+          .map(s => {
+            const year = s.start_date.split('-')[0]
+            if (year === studyYear || studyYear === false) {
+              return s.name
+            }
+          })
+          .includes(selectedStudy)
+
+        const filterByStudy = selectedStudy ? matchStudyYear : true
+        const filterByName =
+          participant.name.toLowerCase().includes(name) || name === false
+            ? true
+            : false
         return (
-          parseInt(participant.yob) >= start && parseInt(participant.yob) <= end
+          parseInt(participant.yob) >= start &&
+          parseInt(participant.yob) <= end &&
+          filterByStudy &&
+          filterByName
         )
       })
     },
@@ -80,10 +145,45 @@ export default {
     handleFilter() {
       this.$router.push({
         name: 'participants',
-        query: { start_year: this.startYear, end_year: this.endYear }
+        query: {
+          start_year: this.startYear,
+          end_year: this.endYear,
+          study: this.selectedStudy,
+          study_year: this.studyYear,
+          name: this.name
+        }
       })
+    },
+    reset() {
+      document.getElementById('name').value = ''
+      document.getElementById('start').value = ''
+      document.getElementById('end').value = ''
+      document.getElementById('studyYear').value = ''
+
+      this.selectedStudy = null
+      this.startYear = null
+      this.endYear = null
+      this.studyYear = null
+      this.name = null
+
+      this.$router.push({ name: 'participants' })
     }
   }
 }
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style lang="sass" scoped>
+@import 'bulma'
+.field-inline
+  align-items: center
+.field
+  margin-left: 1rem
+  margin-right: 1rem
+  margin-bottom: 0 !important
+.filter-label
+  @extend .label
+  margin-bottom: 0 !important
+.filter-button
+  margin-top: 2rem
+  margin-bottom: 2rem
+  margin-right: 1rem
+</style>

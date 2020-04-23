@@ -53,7 +53,9 @@ const routes = [
     query: {
       start_year: '',
       end_year: '',
-      studies: []
+      study: '',
+      study_year: '',
+      name: ''
     }
   },
   {
