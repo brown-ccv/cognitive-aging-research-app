@@ -65,8 +65,24 @@ export default {
         sex_at_birth: data.sex_at_birth,
         preferred_time_of_contact: data.preferred_time_of_contact,
         date_created: Date.now(),
-        in_studies: []
+        in_studies: [],
+        last_contacted: ''
       })
+    }),
+    addLastAttempt: firestoreAction((context, data) => {
+      return db
+        .collection('participants')
+        .doc(data.participantId)
+        .update({
+          last_contacted: {
+            attempted_contact_date: data.attempted_contact_date,
+            contact_method: data.contact_method,
+            participant_responded: data.participant_responded,
+            participant_response: data.participant_response,
+            created_by: context.rootState.user,
+            date_created: Date.now()
+          }
+        })
     }),
     createAttempt: firestoreAction((context, data) => {
       return db

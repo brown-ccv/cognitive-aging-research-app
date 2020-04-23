@@ -135,7 +135,8 @@ export default {
           name: item.name,
           email: item.email,
           year_born: item.yob,
-          in_studies: item.in_studies
+          in_studies: item.in_studies,
+          last_contacted: item.last_contacted.attempted_contact_date
         }
       })
       return reducedData

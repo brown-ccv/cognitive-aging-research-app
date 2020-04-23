@@ -1,7 +1,10 @@
 <template>
   <div>
     <aside>
-      <ParticipantInfo :participant="participant" />
+      <ParticipantInfo
+        :participant="participant"
+        :studies="participant_studies"
+      />
       <StudiesInfo :studies="participant_studies" @studyId="getStudyId" />
       <form v-if="notInStudies.length > 0" v-on:submit.prevent="submitForm">
         <div class="study-card">

@@ -27,6 +27,9 @@
           <div class="info-group-item">
             <p>Preferred Time of Contact</p>
           </div>
+          <div class="info-group-item">
+            <p>Last Contact Attempt</p>
+          </div>
         </aside>
         <main class="info-group-main">
           <div class="info-group-item">
@@ -58,6 +61,20 @@
               </li>
             </ul>
           </div>
+          <div v-show="participant.last_contacted" class="info-group-item">
+            <ul>
+              <li>
+                Date: {{ participant.last_contacted.attempted_contact_date }}
+              </li>
+              <li>
+                Contact Successful:
+                {{ participant.last_contacted.participant_responded }}
+              </li>
+              <li v-show="participant.last_contacted.participant_response">
+                Response: {{ participant.last_contacted.participant_response }}
+              </li>
+            </ul>
+          </div>
         </main>
       </div>
     </article>
@@ -70,6 +87,9 @@ export default {
     participant: {
       type: Object,
       required: true
+    },
+    studies: {
+      type: Array
     }
   }
 }

@@ -145,6 +145,7 @@ export default {
       await this.$recaptchaLoaded()
       this.$recaptcha('submit')
       this.loading = true
+      store.dispatch('firebase/addLastAttempt', this.form)
       store.dispatch('firebase/createAttempt', this.form).then(
         () => {
           this.loading = false
