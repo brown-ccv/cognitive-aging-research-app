@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">Welcome, {{ user }}</h1>
+    <h1 class="title">Welcome, {{ userProfile.attributes.givenName[0] }}</h1>
     <main class="dashboard">
       <DashboardCard header="Studies" :main="studies.length" />
       <DashboardCard
@@ -19,13 +19,9 @@ export default {
   components: {
     DashboardCard
   },
-  data() {
-    return {
-      user: localStorage.crpuser
-    }
-  },
   computed: {
-    ...mapState('firebase', ['participants', 'studies'])
+    ...mapState('firebase', ['participants', 'studies']),
+    ...mapState(['userProfile'])
   }
 }
 </script>

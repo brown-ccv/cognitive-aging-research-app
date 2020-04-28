@@ -11,8 +11,8 @@ export default new Vuex.Store({
   mutations: {
     ...vuexfireMutations,
     SET_USER_PROFILE(state, payload) {
-      console.log('mutation', payload)
       state.userProfile = payload
+      localStorage.setItem('userProfile', JSON.stringify(payload))
     }
   },
   state: {
