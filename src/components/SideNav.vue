@@ -67,19 +67,6 @@
           <span v-show="active">Studies</span></router-link
         >
       </li>
-      <li>
-        <div
-          class="navbar-item sign-button-outter"
-          v-bind:class="{ active: active }"
-        >
-          <font-awesome-icon
-            class="nav-icon"
-            v-bind:class="{ active: active }"
-            icon="sign-out-alt"
-          />
-          <BaseLoginStatus v-show="active" />
-        </div>
-      </li>
     </ul>
   </aside>
 </template>

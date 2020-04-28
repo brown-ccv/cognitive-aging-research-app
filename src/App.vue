@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="main-layout">
-    <SideNav v-if="loggedIn" class="sidebar" @active="isActive" />
+    <SideNav v-if="userProfile" class="sidebar" @active="isActive" />
     <main
       class="router-view"
-      v-bind:class="{ active: active, 'not-logged': !loggedIn }"
+      v-bind:class="{ active: active, 'not-logged': !userProfile }"
     >
       <router-view />
     </main>
@@ -25,12 +25,14 @@ export default {
     SideNav
   },
   created() {
-    store.dispatch('login/loginStatus')
     store.dispatch('firebase/bindStudies')
     store.dispatch('firebase/bindParticipants')
   },
   computed: {
-    ...mapState(['loggedIn', 'user'])
+    ...mapState(['userProfile'])
+  },
+  mounted() {
+    console.log(this.userProfile)
   },
   methods: {
     isActive(value) {

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <BaseNavBar v-if="!loggedIn" />
-    <h1 v-show="loggedIn" class="title">
+    <BaseNavBar v-if="!userProfile" />
+    <h1 v-show="userProfile" class="title">
       Add New Participant
     </h1>
-    <CreateParticipant v-bind:class="{ 'main-section': !loggedIn }" />
+    <CreateParticipant v-bind:class="{ 'main-section': !userProfile }" />
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
     CreateParticipant
   },
   computed: {
-    ...mapState(['loggedIn'])
+    ...mapState(['userProfile'])
   }
 }
 </script>
