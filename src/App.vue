@@ -23,31 +23,8 @@
             >Dashboard</router-link
           >
         </div>
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <BaseLoginStatus class="navbar-item" />
-            </div>
-          </div>
-        </div>
       </div>
     </nav>
     <router-view />
   </div>
 </template>
-
-<script>
-import store from '@/store/index'
-
-export default {
-  created() {
-    this.loginStatus()
-  },
-  methods: {
-    loginStatus() {
-      store.dispatch('login/loginStatus')
-    }
-  }
-}
-</script>

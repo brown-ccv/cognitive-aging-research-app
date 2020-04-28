@@ -4,14 +4,11 @@ import Dashboard from '@/views/private/Dashboard.vue'
 import Edit from '@/views/private/Edit.vue'
 import Home from '@/views/Home.vue'
 import Enroll from '@/views/Enroll.vue'
-import Login from '@/views/Login.vue'
-import Register from '@/views/Register.vue'
 import NewStudy from '@/views/private/NewStudy.vue'
 import UpdateStudy from '@/views/private/UpdateStudy.vue'
 import Participants from '@/views/private/Participants.vue'
 
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
+import Keycloak from 'keycloak-js'
 
 Vue.use(VueRouter)
 
@@ -25,16 +22,6 @@ const routes = [
     path: '/enroll',
     name: 'enroll',
     component: Enroll
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register
   },
   {
     path: '/dashboard',
@@ -74,15 +61,37 @@ const router = new VueRouter({
   routes
 })
 
+import store from '@/store/index'
+
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const isAuthenticated = firebase.auth().currentUser
-  if (requiresAuth && !isAuthenticated) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    next({
-      path: '/login'
-    })
+  const authenticated = store.state.userProfile
+
+  if (authenticated) {
+    next()
+  }
+
+  if (requiresAuth && !authenticated) {
+    let initOptions = {
+      url: 'https://datasci.brown.edu/keycloak/auth',
+      realm: 'ccvpubs',
+      clientId: 'nassar-app-test'
+    }
+
+    let keycloak = Keycloak(initOptions)
+    keycloak
+      .init({ onLoad: 'login-required' })
+      .success(authenticated => {
+        console.log('authenticated:' + authenticated)
+        keycloak
+          .loadUserProfile()
+          .success(profile => {
+            store.dispatch('login/keyCloakAuthenticate', profile)
+          })
+          .error(err => console.log(err))
+        next()
+      })
+      .error(err => console.log(err))
   } else {
     next()
   }
