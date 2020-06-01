@@ -82,7 +82,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth && !authenticated) {
     let initOptions = {
       url: 'https://datasci.brown.edu/keycloak/auth',
-      realm: 'ccvpubs',
+      realm: 'ccv-shib',
       clientId: 'nassar-app-test'
     }
 
