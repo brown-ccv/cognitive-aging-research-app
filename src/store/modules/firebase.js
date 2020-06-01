@@ -78,7 +78,8 @@ export default {
             contact_method: data.contact_method,
             participant_responded: data.participant_responded,
             participant_response: data.participant_response,
-            created_by: context.rootState.user,
+            created_by:
+              context.rootState.userProfile.attributes.brownShortID[0],
             date_created: Date.now()
           }
         })
@@ -95,7 +96,7 @@ export default {
           contact_method: data.contact_method,
           participant_responded: data.participant_responded,
           participant_response: data.participant_response,
-          created_by: context.rootState.user,
+          created_by: context.rootState.userProfile.attributes.brownShortID[0],
           date_created: Date.now()
         })
     }),
@@ -121,7 +122,7 @@ export default {
           participation_start_date: data.start_date,
           participation_end_date: data.end_date,
           date_updated: Date.now(),
-          updated_by: context.rootState.user
+          updated_by: context.rootState.userProfile.attributes.brownShortID[0]
         })
     }),
     addParticipantStudy: firestoreAction((context, data) => {
@@ -132,7 +133,7 @@ export default {
         .collection('study_list')
         .add({
           study: study,
-          created_by: context.rootState.user,
+          created_by: context.rootState.userProfile.attributes.brownShortID[0],
           date_created: Date.now(),
           notes: '',
           participation_start_date: '',
@@ -149,7 +150,7 @@ export default {
         pi: data.pi,
         grant_number: data.grant_number,
         date_created: Date.now(),
-        created_by: context.rootState.user
+        created_by: context.rootState.userProfile.attributes.brownShortID[0]
       })
     }),
     setStudy: ({ commit }, id) => {
@@ -171,7 +172,7 @@ export default {
           name: data.name,
           pi: data.pi,
           grant_number: data.grant_number,
-          updated_by: context.rootState.user,
+          updated_by: context.rootState.userProfile.attributes.brownShortID[0],
           date_updated: Date.now()
         })
     })

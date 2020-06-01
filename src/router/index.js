@@ -92,6 +92,7 @@ router.beforeEach((to, from, next) => {
         keycloak
           .loadUserProfile()
           .success(profile => {
+            console.log(profile)
             store.dispatch('login/keyCloakAuthenticate', profile)
           })
           .error(err => {
