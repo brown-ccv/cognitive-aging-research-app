@@ -1,18 +1,13 @@
 <template>
-  <fieldset>
-    <label :for="id">{{ label }}</label>
-    <div class="field">
-      <div class="control">
-        <div class="select">
-          <select :name="label" :id="id" @input="updateValue" v-bind="$attrs">
-            <option
-              v-for="opt in options"
-              :key="opt"
-              :selected="opt === value"
-              >{{ opt }}</option
-            >
-          </select>
-        </div>
+  <fieldset class="field">
+    <label :for="id" class="label">{{ label }}</label>
+    <div class="control">
+      <div class="select">
+        <select :name="label" :id="id" @input="updateValue">
+          <option v-for="opt in options" :key="opt" :selected="opt === value">{{
+            opt
+          }}</option>
+        </select>
       </div>
     </div>
   </fieldset>
