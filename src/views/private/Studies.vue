@@ -29,7 +29,6 @@ export default {
     },
     reducedData() {
       let reducedData = this.studies.map(item => {
-        console.log(item)
         delete item.date_created
         delete item.date_updated
         delete item.updated_by
