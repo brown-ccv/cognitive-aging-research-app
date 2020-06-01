@@ -31,9 +31,6 @@ export default {
   computed: {
     ...mapState(['userProfile'])
   },
-  mounted() {
-    console.log(this.userProfile)
-  },
   methods: {
     isActive(value) {
       this.active = value

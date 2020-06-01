@@ -73,7 +73,6 @@ router.beforeEach((to, from, next) => {
     'Cognitive Research at Brown'
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const authenticated = store.state.userProfile
-  console.log(store.state.userProfile)
 
   if (authenticated) {
     next()
@@ -89,17 +88,20 @@ router.beforeEach((to, from, next) => {
     let keycloak = Keycloak(initOptions)
     keycloak
       .init({ onLoad: 'login-required' })
-      .success(authenticated => {
-        console.log('authenticated:' + authenticated)
+      .success(authenticated => { // eslint-disable-line
         keycloak
           .loadUserProfile()
           .success(profile => {
             store.dispatch('login/keyCloakAuthenticate', profile)
           })
-          .error(err => console.log(err))
+          .error(err => {
+            throw err
+          })
         next()
       })
-      .error(err => console.log(err))
+      .error(err => {
+        throw err
+      })
   } else {
     next()
   }

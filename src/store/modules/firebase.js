@@ -35,7 +35,6 @@ export default {
       )
     }),
     addStudyToParticipant: firestoreAction((context, data) => {
-      console.log(data)
       return db
         .collection('participants')
         .doc(data.participantId)
@@ -124,9 +123,6 @@ export default {
           date_updated: Date.now(),
           updated_by: context.rootState.user
         })
-        .then(() => {
-          console.log('participant updated!')
-        })
     }),
     addParticipantStudy: firestoreAction((context, data) => {
       const study = db.collection('studies').doc(data.studyId)
@@ -177,9 +173,6 @@ export default {
           grant_number: data.grant_number,
           updated_by: context.rootState.user,
           date_updated: Date.now()
-        })
-        .then(() => {
-          console.log('study updated!')
         })
     })
   }
