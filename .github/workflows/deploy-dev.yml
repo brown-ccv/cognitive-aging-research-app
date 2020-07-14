@@ -28,6 +28,8 @@ jobs:
         env:
           ci: true
           USE_FIREBASE: true
+          VUE_APP_FIRABASE_AUTH_SERVICE_ACCOUNT_EMAIL: ${{ secrets.VUE_APP_FIRABASE_AUTH_SERVICE_ACCOUNT_EMAIL }}
+          VUE_APP_FIRABASE_AUTH_PRIVATE_KEY: ${{ secrets.VUE_APP_FIRABASE_AUTH_PRIVATE_KEY }}
       - name: Deploy to Firebase
         run: npm run deploy
         env:

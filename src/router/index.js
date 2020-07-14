@@ -6,7 +6,8 @@ import Edit from '@/views/private/Edit.vue'
 import Studies from '@/views/private/Studies.vue'
 import UpdateStudy from '@/views/private/UpdateStudy.vue'
 import Participants from '@/views/private/Participants.vue'
-
+import firebase from 'firebase'
+import jsonwebtoken from 'jsonwebtoken'
 import Keycloak from 'keycloak-js'
 
 Vue.use(VueRouter)
@@ -88,18 +89,39 @@ router.beforeEach((to, from, next) => {
     let keycloak = Keycloak(initOptions)
     keycloak
       .init({ onLoad: 'login-required' })
-      .success(authenticated => { // eslint-disable-line
+      .then(authenticated => { // eslint-disable-line
+        let firebaseToken = keycloak.tokenParsed
+        firebaseToken.iss = keycloak.idTokenParsed.sae
+        firebaseToken.sub = keycloak.idTokenParsed.sae
+        firebaseToken.aud =
+          'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit'
+        const token = jsonwebtoken.sign(
+          firebaseToken,
+          atob(keycloak.idTokenParsed.key),
+          {
+            algorithm: 'RS256'
+          }
+        )
+        firebase
+          .auth()
+          .signInWithCustomToken(token)
+          .catch(function(error) {
+            throw error
+          })
+        // keycloak.loadUserInfo().success(info => {})
         keycloak
           .loadUserProfile()
-          .success(profile => {
-            store.dispatch('login/keyCloakAuthenticate', profile)
+          .then(profile => {
+            store.dispatch('login/keyCloakAuthenticate', {
+              ...profile
+            })
           })
-          .error(err => {
+          .catch(err => {
             throw err
           })
         next()
       })
-      .error(err => {
+      .catch(err => {
         throw err
       })
   } else {
