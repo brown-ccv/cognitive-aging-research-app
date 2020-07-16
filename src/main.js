@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import i18n from './i18n'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
 
 Vue.use(VueReCaptcha, { siteKey: '6LfYQeEUAAAAAEeaM78FpwAD3VC_9zIQO_ybYwoa' })
 
@@ -79,9 +82,33 @@ Vue.config.productionTip = false
 
 Vue.use(require('vue-moment'))
 
-new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App)
-}).$mount('#app')
+let app
+
+const firebaseConfig = {
+  apiKey: process.env['VUE_APP_FIRABASE_API_KEY'],
+  authDomain: 'nassar-test.firebaseapp.com',
+  databaseURL: 'https://nassar-test.firebaseio.com',
+  projectId: 'nassar-test',
+  storageBucket: 'nassar-test.appspot.com',
+  messagingSenderId: process.env['VUE_APP_FIRABASE_MSG_SENDER_ID'],
+  appId: process.env['VUE_APP_FIRABASE_API_ID']
+}
+
+// Get a Firestore instance
+const init = firebase.initializeApp(firebaseConfig)
+const db = init.firestore()
+
+// Export types that exists in Firestore
+const { TimeStamp, GeoPoint } = firebase.firestore
+export { db, TimeStamp, GeoPoint }
+
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
+      router,
+      store,
+      i18n,
+      render: h => h(App)
+    }).$mount('#app')
+  }
+})

@@ -1,5 +1,5 @@
 import { firestoreAction } from 'vuexfire'
-import { db } from '@/db'
+import { db } from '@/main'
 
 export default {
   namespaced: true,
@@ -21,19 +21,24 @@ export default {
   },
   actions: {
     // Participants actions
-    bindParticipants: firestoreAction(({ bindFirestoreRef }) => {
+    bindParticipants: firestoreAction(async ({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
-      return bindFirestoreRef('participants', db.collection('participants'))
-    }),
-    bindParticipantStudies: firestoreAction(({ bindFirestoreRef }, id) => {
-      return bindFirestoreRef(
-        'participant_studies',
-        db
-          .collection('participants')
-          .doc(id)
-          .collection('study_list')
+      return await bindFirestoreRef(
+        'participants',
+        db.collection('participants')
       )
     }),
+    bindParticipantStudies: firestoreAction(
+      async ({ bindFirestoreRef }, id) => {
+        return await bindFirestoreRef(
+          'participant_studies',
+          db
+            .collection('participants')
+            .doc(id)
+            .collection('study_list')
+        )
+      }
+    ),
     addStudyToParticipant: firestoreAction((context, data) => {
       return db
         .collection('participants')

@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import store from '@/store/index'
 import SideNav from '@/components/SideNav'
 import { mapState } from 'vuex'
 
@@ -23,10 +22,6 @@ export default {
   },
   components: {
     SideNav
-  },
-  created() {
-    store.dispatch('firebase/bindStudies')
-    store.dispatch('firebase/bindParticipants')
   },
   computed: {
     ...mapState(['userProfile'])
