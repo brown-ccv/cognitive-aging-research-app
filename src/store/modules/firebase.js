@@ -1,5 +1,5 @@
 import { firestoreAction } from 'vuexfire'
-import { db } from '@/db'
+import { db } from '@/main'
 
 export default {
   namespaced: true,
@@ -21,21 +21,25 @@ export default {
   },
   actions: {
     // Participants actions
-    bindParticipants: firestoreAction(({ bindFirestoreRef }) => {
+    bindParticipants: firestoreAction(async ({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
-      return bindFirestoreRef('participants', db.collection('participants'))
-    }),
-    bindParticipantStudies: firestoreAction(({ bindFirestoreRef }, id) => {
-      return bindFirestoreRef(
-        'participant_studies',
-        db
-          .collection('participants')
-          .doc(id)
-          .collection('study_list')
+      return await bindFirestoreRef(
+        'participants',
+        db.collection('participants')
       )
     }),
+    bindParticipantStudies: firestoreAction(
+      async ({ bindFirestoreRef }, id) => {
+        return await bindFirestoreRef(
+          'participant_studies',
+          db
+            .collection('participants')
+            .doc(id)
+            .collection('study_list')
+        )
+      }
+    ),
     addStudyToParticipant: firestoreAction((context, data) => {
-      console.log(data)
       return db
         .collection('participants')
         .doc(data.participantId)
@@ -79,7 +83,8 @@ export default {
             contact_method: data.contact_method,
             participant_responded: data.participant_responded,
             participant_response: data.participant_response,
-            created_by: context.rootState.user,
+            created_by:
+              context.rootState.userProfile.attributes.brownShortID[0],
             date_created: Date.now()
           }
         })
@@ -96,7 +101,7 @@ export default {
           contact_method: data.contact_method,
           participant_responded: data.participant_responded,
           participant_response: data.participant_response,
-          created_by: context.rootState.user,
+          created_by: context.rootState.userProfile.attributes.brownShortID[0],
           date_created: Date.now()
         })
     }),
@@ -122,10 +127,7 @@ export default {
           participation_start_date: data.start_date,
           participation_end_date: data.end_date,
           date_updated: Date.now(),
-          updated_by: context.rootState.user
-        })
-        .then(() => {
-          console.log('participant updated!')
+          updated_by: context.rootState.userProfile.attributes.brownShortID[0]
         })
     }),
     addParticipantStudy: firestoreAction((context, data) => {
@@ -136,7 +138,7 @@ export default {
         .collection('study_list')
         .add({
           study: study,
-          created_by: context.rootState.user,
+          created_by: context.rootState.userProfile.attributes.brownShortID[0],
           date_created: Date.now(),
           notes: '',
           participation_start_date: '',
@@ -153,7 +155,7 @@ export default {
         pi: data.pi,
         grant_number: data.grant_number,
         date_created: Date.now(),
-        created_by: context.rootState.user
+        created_by: context.rootState.userProfile.attributes.brownShortID[0]
       })
     }),
     setStudy: ({ commit }, id) => {
@@ -175,11 +177,8 @@ export default {
           name: data.name,
           pi: data.pi,
           grant_number: data.grant_number,
-          updated_by: context.rootState.user,
+          updated_by: context.rootState.userProfile.attributes.brownShortID[0],
           date_updated: Date.now()
-        })
-        .then(() => {
-          console.log('study updated!')
         })
     })
   }

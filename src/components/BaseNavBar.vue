@@ -31,7 +31,7 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-light" href="/dashboard"
+            <a class="button is-light" href="/login"
               >Researcher Login
               <font-awesome-icon class="login-icon" icon="sign-in-alt" />
             </a>
