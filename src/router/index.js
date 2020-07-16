@@ -77,7 +77,7 @@ router.beforeEach((to, from, next) => {
     'Cognitive Research at Brown'
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   let authenticated = store.state.userProfile
-  console.log(authenticated)
+
   if (authenticated) {
     next()
   }
