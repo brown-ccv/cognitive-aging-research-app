@@ -7,8 +7,7 @@ import Edit from '@/views/private/Edit.vue'
 import Studies from '@/views/private/Studies.vue'
 import UpdateStudy from '@/views/private/UpdateStudy.vue'
 import Participants from '@/views/private/Participants.vue'
-import * as firebase from 'firebase'
-import 'firebase/auth'
+import store from '@/store/index'
 
 Vue.use(VueRouter)
 
@@ -77,8 +76,8 @@ router.beforeEach((to, from, next) => {
     `${to.meta.title} | Cognitive Research at Brown` ||
     'Cognitive Research at Brown'
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  let authenticated = firebase.auth().currentUser
-
+  let authenticated = store.state.userProfile
+  console.log(authenticated)
   if (authenticated) {
     next()
   }
