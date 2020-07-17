@@ -25,7 +25,7 @@ export default {
   computed: {
     ...mapState('firebase', ['studies']),
     headings() {
-      return Object.keys(this.studies[0])
+      return Object.keys(this.reducedData[0])
     },
     reducedData() {
       let reducedData = this.studies.map(item => {
