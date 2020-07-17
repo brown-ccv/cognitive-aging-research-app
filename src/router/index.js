@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
+import Reset from '@/views/Reset.vue'
 import Dashboard from '@/views/private/Dashboard.vue'
 import Edit from '@/views/private/Edit.vue'
 import Studies from '@/views/private/Studies.vue'
@@ -62,6 +63,12 @@ const routes = [
     name: 'login',
     component: Login,
     meta: { title: 'Login' }
+  },
+  {
+    path: '/reset',
+    name: 'reset',
+    component: Reset,
+    meta: { title: 'Reset Password' }
   }
 ]
 

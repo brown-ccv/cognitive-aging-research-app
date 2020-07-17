@@ -2,8 +2,9 @@
   <div>
     <BaseNavBar v-if="!userProfile" />
     <div v-if="error">{{ error.message }}</div>
-    <main class="login">
+    <main class="login content">
       <div class="login-container">
+        <h1>Researcher Login</h1>
         <form @submit.prevent="login">
           <BaseInput
             id="email"
@@ -29,6 +30,7 @@
           </BaseInput>
           <button class="button is-success" type="submit">Login</button>
         </form>
+        <router-link to="/reset">Reset your password</router-link>
       </div>
     </main>
   </div>
