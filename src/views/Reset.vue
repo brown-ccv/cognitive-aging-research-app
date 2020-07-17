@@ -18,16 +18,21 @@
             label="Email"
             type="email"
             placeholder="Email"
-            v-model="email"
-            @blur="$v.email.$touch()"
-            :error="$v.email.$error"
-            :valid="!$v.email.$invalid"
+            v-model="form.email"
+            @blur="$v.form.email.$touch()"
+            :error="$v.form.email.$error"
+            :valid="!$v.form.email.$invalid"
           >
           </BaseInput>
-          <button class="button is-success" type="submit">
+          <button
+            class="button is-success"
+            type="submit"
+            :disabled="$v.$anyError || $v.form.$invalid"
+          >
             Send reset password email
           </button>
         </form>
+        <router-link to="/login">Back to Login</router-link>
       </div>
     </main>
   </div>
@@ -43,17 +48,18 @@ import { mapState } from 'vuex'
 export default {
   mixins: [validationMixin],
   validations: {
-    email: {
-      required,
-      email
-    },
-    password: {
-      required
+    form: {
+      email: {
+        required,
+        email
+      }
     }
   },
   data() {
     return {
-      email: '',
+      form: {
+        email: ''
+      },
       error: '',
       sent: '',
       showNotification: false,
@@ -75,7 +81,7 @@ export default {
       let that = this
       firebase
         .auth()
-        .sendPasswordResetEmail(this.email)
+        .sendPasswordResetEmail(this.form.email)
         .then(function() {
           that.sent = true
           that.message = that.successMessage

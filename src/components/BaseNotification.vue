@@ -18,7 +18,7 @@ export default {
     }
   },
   created() {
-    setTimeout(() => this.close(), 4000)
+    setTimeout(() => this.close(), 8000)
   },
   methods: {
     close() {

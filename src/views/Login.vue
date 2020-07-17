@@ -5,16 +5,23 @@
     <main class="login content">
       <div class="login-container">
         <h1>Researcher Login</h1>
+        <BaseNotification
+          v-if="showNotification"
+          :text="message"
+          :variant="notificationVariant"
+          @close="hideNotification()"
+        >
+        </BaseNotification>
         <form @submit.prevent="login">
           <BaseInput
             id="email"
             label="Email"
             type="email"
             placeholder="Email"
-            v-model="email"
-            @blur="$v.email.$touch()"
-            :error="$v.email.$error"
-            :valid="!$v.email.$invalid"
+            v-model="form.email"
+            @blur="$v.form.email.$touch()"
+            :error="$v.form.email.$error"
+            :valid="!$v.form.email.$invalid"
           >
           </BaseInput>
           <BaseInput
@@ -22,13 +29,19 @@
             label="Password"
             type="password"
             placeholder="Password"
-            v-model="password"
-            @blur="$v.password.$touch()"
-            :error="$v.password.$error"
-            :valid="!$v.password.$invalid"
+            v-model="form.password"
+            @blur="$v.form.password.$touch()"
+            :error="$v.form.password.$error"
+            :valid="!$v.form.password.$invalid"
           >
           </BaseInput>
-          <button class="button is-success" type="submit">Login</button>
+          <button
+            class="button is-success"
+            type="submit"
+            :disabled="$v.$anyError || $v.form.$invalid"
+          >
+            Login
+          </button>
         </form>
         <router-link to="/reset">Reset your password</router-link>
       </div>
@@ -46,33 +59,44 @@ import { mapState } from 'vuex'
 export default {
   mixins: [validationMixin],
   validations: {
-    email: {
-      required,
-      email
-    },
-    password: {
-      required
+    form: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required
+      }
     }
   },
   data() {
     return {
-      email: '',
-      password: '',
-      error: ''
+      form: {
+        email: '',
+        password: ''
+      },
+      error: '',
+      showNotification: false,
+      message: '',
+      notificationVariant: ''
     }
   },
   computed: {
-    ...mapState(['userProfile'])
+    ...mapState(['userProfile']),
+    errorMessage() {
+      return `${this.error} Please try again. `
+    }
   },
   methods: {
     login() {
+      let that = this
       firebase
         .auth()
         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(async () => {
           await firebase
             .auth()
-            .signInWithEmailAndPassword(this.email, this.password)
+            .signInWithEmailAndPassword(this.form.email, this.form.password)
             .then(response => {
               this.$store.dispatch('login/authenticate', response)
               this.$store.dispatch('firebase/bindStudies')
@@ -81,8 +105,14 @@ export default {
           this.$router.replace({ name: 'dashboard' })
         })
         .catch(err => {
-          throw err.message
+          that.error = err.message
+          that.showNotification = true
+          that.message = that.errorMessage
+          that.notificationVariant = 'danger'
         })
+    },
+    hideNotification() {
+      this.showNotification = false
     }
   }
 }
