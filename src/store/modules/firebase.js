@@ -152,7 +152,6 @@ export default {
       return bindFirestoreRef('studies', db.collection('studies'))
     }),
     createStudy: firestoreAction((context, data) => {
-      console.log(data)
       return db.collection('studies').add({
         name: data.name,
         pi: data.pi,
