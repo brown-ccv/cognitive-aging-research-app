@@ -29,12 +29,11 @@ export default {
     },
     reducedData() {
       let reducedData = this.studies.map(item => {
-        delete item.date_created
-        delete item.date_updated
-        delete item.updated_by
-        delete item.created_by
-
-        return item
+        return {
+          grant_number: item.grant_number,
+          pi: item.pi,
+          name: item.name
+        }
       })
       return reducedData
     }
