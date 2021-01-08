@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar has-background-info"
+    class="navbar has-background-light"
     role="navigation"
     aria-label="main navigation"
   >

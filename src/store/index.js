@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from '@/store/modules/firebase'
 import login from '@/store/modules/login'
+import register from '@/store/modules/register'
 
 import { vuexfireMutations } from 'vuexfire'
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     firebase,
-    login
+    login,
+    register
   }
 })

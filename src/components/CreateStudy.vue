@@ -28,14 +28,26 @@
       </BaseInput>
 
       <BaseInput
-        id="grant_number"
-        label="Grant Number"
+        id="lab_name"
+        label="Lab Name"
         type="text"
-        placeholder="Enter Grant Number"
-        v-model="form.grant_number"
-        @blur="$v.form.grant_number.$touch()"
-        :error="$v.form.grant_number.$error"
-        :valid="!$v.form.grant_number.$invalid"
+        placeholder="Enter Lab Name"
+        v-model="form.lab_name"
+        @blur="$v.form.lab_name.$touch()"
+        :error="$v.form.lab_name.$error"
+        :valid="!$v.form.lab_name.$invalid"
+      >
+      </BaseInput>
+
+      <BaseInput
+        id="description"
+        label="Study Description"
+        type="text"
+        placeholder="Enter Study Description"
+        v-model="form.description"
+        @blur="$v.form.description.$touch()"
+        :error="$v.form.description.$error"
+        :valid="!$v.form.description.$invalid"
       >
       </BaseInput>
 
@@ -85,7 +97,10 @@ export default {
       pi: {
         required
       },
-      grant_number: {
+      lab_name: {
+        required
+      },
+      description: {
         required
       }
     }
@@ -94,8 +109,9 @@ export default {
     return {
       form: {
         name: '',
+        lab_name: '',
         pi: '',
-        grant_number: ''
+        description: ''
       },
       loading: false,
       success: false,

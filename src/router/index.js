@@ -8,6 +8,9 @@ import Edit from '@/views/private/Edit.vue'
 import Studies from '@/views/private/Studies.vue'
 import UpdateStudy from '@/views/private/UpdateStudy.vue'
 import Participants from '@/views/private/Participants.vue'
+import NewParticipant from '@/views/NewParticipant.vue'
+import Register from '@/views/private/Register.vue'
+
 import store from '@/store/index'
 
 Vue.use(VueRouter)
@@ -18,7 +21,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      title: 'Register'
+      title: 'Home'
     }
   },
   {
@@ -26,6 +29,12 @@ const routes = [
     name: 'dashboard',
     component: Dashboard,
     meta: { requiresAuth: true, title: 'Dashboard' }
+  },
+  {
+    path: '/new-participant',
+    name: 'new-participant',
+    component: NewParticipant,
+    meta: { requiresAuth: false, title: 'New Participant' }
   },
   {
     path: '/participants',
@@ -63,6 +72,12 @@ const routes = [
     name: 'login',
     component: Login,
     meta: { title: 'Login' }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: { requiresAuth: true, title: 'Register' }
   },
   {
     path: '/reset',
