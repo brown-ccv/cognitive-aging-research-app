@@ -11,7 +11,7 @@ export default {
       await firebase
         .auth()
         .createUserWithEmailAndPassword(credentials.email, credentials.password)
-        .then(response => console.log(response))
+        .then(res => res)
         .catch(err => {
           commit('SET_ERROR', err)
         })
