@@ -30,9 +30,11 @@ export default {
     reducedData() {
       let reducedData = this.studies.map(item => {
         return {
-          grant_number: item.grant_number,
+          id: item.id,
+          lab_name: item.lab_name,
           pi: item.pi,
-          name: item.name
+          name: item.name,
+          description: item.description
         }
       })
       return reducedData

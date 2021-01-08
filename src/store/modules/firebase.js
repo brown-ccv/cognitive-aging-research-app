@@ -155,7 +155,8 @@ export default {
       return db.collection('studies').add({
         name: data.name,
         pi: data.pi,
-        grant_number: data.grant_number,
+        lab_name: data.lab_name,
+        description: data.description,
         date_created: Date.now(),
         created_by: firebase.auth().currentUser.uid
       })
@@ -178,7 +179,8 @@ export default {
         .update({
           name: data.name,
           pi: data.pi,
-          grant_number: data.grant_number,
+          lab_name: data.lab_name,
+          description: data.description,
           updated_by: firebase.auth().currentUser.uid,
           date_updated: Date.now()
         })

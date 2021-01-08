@@ -24,13 +24,23 @@
         />
 
         <BaseInput
-          id="end_date"
-          label="Grant Number"
+          id="lab_name"
+          label="Lab Name"
           type="text"
-          :placeholder="study.grant_number"
-          v-model="study.grant_number"
-          @blur="$v.study.grant_number.$touch()"
-          :error="$v.study.grant_number.$error"
+          :placeholder="study.lab_name"
+          v-model="study.lab_name"
+          @blur="$v.study.lab_name.$touch()"
+          :error="$v.study.lab_name.$error"
+        />
+
+        <BaseInput
+          id="description"
+          label="Study Description"
+          type="text"
+          :placeholder="study.description"
+          v-model="study.description"
+          @blur="$v.study.description.$touch()"
+          :error="$v.study.description.$error"
         />
 
         <div class="control">
@@ -92,7 +102,10 @@ export default {
       pi: {
         required
       },
-      grant_number: {
+      lab_name: {
+        required
+      },
+      description: {
         required
       }
     }
