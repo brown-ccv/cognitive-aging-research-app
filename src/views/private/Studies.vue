@@ -25,16 +25,17 @@ export default {
   computed: {
     ...mapState('firebase', ['studies']),
     headings() {
-      return Object.keys(this.studies[0])
+      return Object.keys(this.reducedData[0])
     },
     reducedData() {
       let reducedData = this.studies.map(item => {
-        delete item.date_created
-        delete item.date_updated
-        delete item.updated_by
-        delete item.created_by
-
-        return item
+        return {
+          id: item.id,
+          lab_name: item.lab_name,
+          pi: item.pi,
+          name: item.name,
+          description: item.description
+        }
       })
       return reducedData
     }

@@ -28,13 +28,11 @@ jobs:
         env:
           ci: true
           USE_FIREBASE: true
-          VUE_APP_FIRABASE_AUTH_SERVICE_ACCOUNT_EMAIL: ${{ secrets.VUE_APP_FIRABASE_AUTH_SERVICE_ACCOUNT_EMAIL }}
-          VUE_APP_FIRABASE_AUTH_PRIVATE_KEY: ${{ secrets.VUE_APP_FIRABASE_AUTH_PRIVATE_KEY }}
+          VUE_APP_FIRABASE_API_KEY: ${{ secrets.VUE_APP_FIRABASE_API_KEY }}
+          VUE_APP_FIRABASE_MSG_SENDER_ID: ${{ secrets.VUE_APP_FIRABASE_MSG_SENDER_ID }}
+          VUE_APP_FIRABASE_API_ID: ${{ secrets.VUE_APP_FIRABASE_API_ID }}
       - name: Deploy to Firebase
         run: npm run deploy
         env:
           ci: true
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          VUE_APP_FIRABASE_API_KEY: ${{ secrets.VUE_APP_FIRABASE_API_KEY }}
-          VUE_APP_FIRABASE_MSG_SENDER_ID: ${{ secrets.VUE_APP_FIRABASE_MSG_SENDER_ID }}
-          VUE_APP_FIRABASE_API_ID: ${{ secrets.VUE_APP_FIRABASE_API_ID }}

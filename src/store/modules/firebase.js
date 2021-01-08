@@ -1,5 +1,7 @@
 import { firestoreAction } from 'vuexfire'
 import { db } from '@/main'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
 
 export default {
   namespaced: true,
@@ -23,6 +25,7 @@ export default {
     // Participants actions
     bindParticipants: firestoreAction(async ({ bindFirestoreRef }) => {
       // return the promise returned by `bindFirestoreRef`
+
       return await bindFirestoreRef(
         'participants',
         db.collection('participants')
@@ -83,8 +86,7 @@ export default {
             contact_method: data.contact_method,
             participant_responded: data.participant_responded,
             participant_response: data.participant_response,
-            created_by:
-              context.rootState.userProfile.attributes.brownShortID[0],
+            created_by: firebase.auth().currentUser.uid,
             date_created: Date.now()
           }
         })
@@ -101,7 +103,7 @@ export default {
           contact_method: data.contact_method,
           participant_responded: data.participant_responded,
           participant_response: data.participant_response,
-          created_by: context.rootState.userProfile.attributes.brownShortID[0],
+          created_by: firebase.auth().currentUser.uid,
           date_created: Date.now()
         })
     }),
@@ -127,7 +129,7 @@ export default {
           participation_start_date: data.start_date,
           participation_end_date: data.end_date,
           date_updated: Date.now(),
-          updated_by: context.rootState.userProfile.attributes.brownShortID[0]
+          updated_by: firebase.auth().currentUser.uid
         })
     }),
     addParticipantStudy: firestoreAction((context, data) => {
@@ -138,7 +140,7 @@ export default {
         .collection('study_list')
         .add({
           study: study,
-          created_by: context.rootState.userProfile.attributes.brownShortID[0],
+          created_by: firebase.auth().currentUser.uid,
           date_created: Date.now(),
           notes: '',
           participation_start_date: '',
@@ -153,9 +155,10 @@ export default {
       return db.collection('studies').add({
         name: data.name,
         pi: data.pi,
-        grant_number: data.grant_number,
+        lab_name: data.lab_name,
+        description: data.description,
         date_created: Date.now(),
-        created_by: context.rootState.userProfile.attributes.brownShortID[0]
+        created_by: firebase.auth().currentUser.uid
       })
     }),
     setStudy: ({ commit }, id) => {
@@ -176,8 +179,9 @@ export default {
         .update({
           name: data.name,
           pi: data.pi,
-          grant_number: data.grant_number,
-          updated_by: context.rootState.userProfile.attributes.brownShortID[0],
+          lab_name: data.lab_name,
+          description: data.description,
+          updated_by: firebase.auth().currentUser.uid,
           date_updated: Date.now()
         })
     })

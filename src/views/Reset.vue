@@ -4,7 +4,7 @@
     <div v-if="error">{{ error.message }}</div>
     <main class="login content">
       <div class="login-container">
-        <h1>Researcher Login</h1>
+        <h1>Reset Password</h1>
         <BaseNotification
           v-if="showNotification"
           :text="message"
@@ -12,7 +12,7 @@
           @close="hideNotification()"
         >
         </BaseNotification>
-        <form @submit.prevent="login">
+        <form @submit.prevent="reset">
           <BaseInput
             id="email"
             label="Email"
@@ -24,26 +24,15 @@
             :valid="!$v.form.email.$invalid"
           >
           </BaseInput>
-          <BaseInput
-            id="password"
-            label="Password"
-            type="password"
-            placeholder="Password"
-            v-model="form.password"
-            @blur="$v.form.password.$touch()"
-            :error="$v.form.password.$error"
-            :valid="!$v.form.password.$invalid"
-          >
-          </BaseInput>
           <button
             class="button is-success"
             type="submit"
             :disabled="$v.$anyError || $v.form.$invalid"
           >
-            Login
+            Send reset password email
           </button>
         </form>
-        <router-link to="/reset">Reset your password</router-link>
+        <router-link to="/login">Back to Login</router-link>
       </div>
     </main>
   </div>
@@ -63,19 +52,16 @@ export default {
       email: {
         required,
         email
-      },
-      password: {
-        required
       }
     }
   },
   data() {
     return {
       form: {
-        email: '',
-        password: ''
+        email: ''
       },
       error: '',
+      sent: '',
       showNotification: false,
       message: '',
       notificationVariant: ''
@@ -84,27 +70,25 @@ export default {
   computed: {
     ...mapState(['userProfile']),
     errorMessage() {
-      return `${this.error} Please try again. `
+      return `An erro has occurred, please try again. ${this.error}`
+    },
+    successMessage() {
+      return `Sent password reset link to ${this.email}`
     }
   },
   methods: {
-    login() {
+    reset() {
       let that = this
       firebase
         .auth()
-        .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(async () => {
-          await firebase
-            .auth()
-            .signInWithEmailAndPassword(this.form.email, this.form.password)
-            .then(response => {
-              this.$store.dispatch('login/authenticate', response)
-              this.$store.dispatch('firebase/bindStudies')
-              this.$store.dispatch('firebase/bindParticipants')
-            })
-          this.$router.replace({ name: 'dashboard' })
+        .sendPasswordResetEmail(this.form.email)
+        .then(function() {
+          that.sent = true
+          that.message = that.successMessage
+          that.showNotification = true
+          that.notificationVariant = 'success'
         })
-        .catch(err => {
+        .catch(function(err) {
           that.error = err.message
           that.showNotification = true
           that.message = that.errorMessage
