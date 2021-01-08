@@ -9,6 +9,7 @@ import Studies from '@/views/private/Studies.vue'
 import UpdateStudy from '@/views/private/UpdateStudy.vue'
 import Participants from '@/views/private/Participants.vue'
 import NewParticipant from '@/views/NewParticipant.vue'
+import Register from '@/views/private/Register.vue'
 
 import store from '@/store/index'
 
@@ -20,7 +21,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      title: 'Register'
+      title: 'Home'
     }
   },
   {
@@ -71,6 +72,12 @@ const routes = [
     name: 'login',
     component: Login,
     meta: { title: 'Login' }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: { requiresAuth: true, title: 'Register' }
   },
   {
     path: '/reset',

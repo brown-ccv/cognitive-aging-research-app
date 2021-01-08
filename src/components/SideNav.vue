@@ -43,7 +43,7 @@
         <router-link
           class="side-navbar-item"
           v-bind:class="{ collapsed: !active }"
-          to="/"
+          to="/new-participant"
         >
           <font-awesome-icon
             class="nav-icon"
@@ -62,9 +62,23 @@
           <font-awesome-icon
             class="nav-icon"
             v-bind:class="{ active: active }"
-            icon="id-card"
+            icon="newspaper"
           />
           <span v-show="active">Studies</span></router-link
+        >
+      </li>
+      <li>
+        <router-link
+          class="side-navbar-item"
+          v-bind:class="{ collapsed: !active }"
+          to="/register"
+        >
+          <font-awesome-icon
+            class="nav-icon"
+            v-bind:class="{ active: active }"
+            icon="id-card"
+          />
+          <span v-show="active">Create Research Account</span></router-link
         >
       </li>
     </ul>
