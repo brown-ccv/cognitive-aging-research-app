@@ -129,6 +129,7 @@ export default {
         delete item.preferred_time_of_contact
         delete item.contact_preference
         delete item.phone
+        console.log(item)
 
         return {
           id: item.id,

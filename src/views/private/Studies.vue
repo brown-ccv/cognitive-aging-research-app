@@ -34,7 +34,9 @@ export default {
           lab_name: item.lab_name,
           pi: item.pi,
           name: item.name,
-          description: item.description
+          study_owner: item.study_owner,
+          description: item.description,
+          lab_link: item.lab_link
         }
       })
       return reducedData

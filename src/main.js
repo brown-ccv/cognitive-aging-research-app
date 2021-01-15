@@ -53,7 +53,8 @@ import {
   faFilter,
   faCalendar,
   faUserPlus,
-  faNewspaper
+  faNewspaper,
+  faExternalLinkSquareAlt
 } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
@@ -77,6 +78,7 @@ library.add(faFilter)
 library.add(faCalendar)
 library.add(faUserPlus)
 library.add(faNewspaper)
+library.add(faExternalLinkSquareAlt)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

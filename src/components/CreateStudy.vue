@@ -40,6 +40,30 @@
       </BaseInput>
 
       <BaseInput
+        id="lab_link"
+        label="Lab Link"
+        type="text"
+        placeholder="Enter link to lab website"
+        v-model="form.lab_link"
+        @blur="$v.form.lab_link.$touch()"
+        :error="$v.form.lab_link.$error"
+        :valid="!$v.form.lab_link.$invalid"
+      >
+      </BaseInput>
+
+      <BaseInput
+        id="study_owner"
+        label="Study Owner"
+        type="text"
+        placeholder="Enter Study Owner"
+        v-model="form.study_owner"
+        @blur="$v.form.study_owner.$touch()"
+        :error="$v.form.study_owner.$error"
+        :valid="!$v.form.study_owner.$invalid"
+      >
+      </BaseInput>
+
+      <BaseInput
         id="description"
         label="Study Description"
         type="text"
@@ -102,6 +126,12 @@ export default {
       },
       description: {
         required
+      },
+      lab_link: {
+        required
+      },
+      study_owner: {
+        required
       }
     }
   },
@@ -110,6 +140,8 @@ export default {
       form: {
         name: '',
         lab_name: '',
+        lab_link: '',
+        study_owner: '',
         pi: '',
         description: ''
       },
