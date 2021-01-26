@@ -18,8 +18,15 @@
         <article class="media">
           <div class="media-content">
             <div class="content">
-              <span class="tag is-info is-large">{{ study.lab_name }}</span>
+              <span class="tag is-link is-large"
+                ><a class="has-text-white" :href="study.lab_link"
+                  >{{ study.lab_name
+                  }}<font-awesome-icon
+                    class="ml-3"
+                    icon="external-link-square-alt"/></a
+              ></span>
               <h2>{{ study.name }}</h2>
+              <p>{{ study.study_owner }}</p>
               <p>
                 <br />
                 {{ study.description }}

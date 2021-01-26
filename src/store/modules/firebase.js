@@ -156,6 +156,8 @@ export default {
         name: data.name,
         pi: data.pi,
         lab_name: data.lab_name,
+        lab_link: data.lab_link,
+        study_owner: data.study_owner,
         description: data.description,
         date_created: Date.now(),
         created_by: firebase.auth().currentUser.uid
@@ -180,6 +182,8 @@ export default {
           name: data.name,
           pi: data.pi,
           lab_name: data.lab_name,
+          lab_link: data.lab_link,
+          study_owner: data.study_owner,
           description: data.description,
           updated_by: firebase.auth().currentUser.uid,
           date_updated: Date.now()
