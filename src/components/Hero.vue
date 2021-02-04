@@ -1,6 +1,6 @@
 <template>
   <section class="hero is-small">
-    <div class="hero-body hero-no-padding">
+    <div class="hero-body">
       <div class="columns is-mobile is-vcentered">
         <div class="column is-half is-multiline">
           <div class="container">
@@ -38,9 +38,7 @@ export default {
 <style lang="sass" scoped>
 .hero-pattern
     width: 100%
-.hero-no-padding
-    padding-top: 0rem !important
-.title-padding
-    padding-top: 9rem
-    padding-left: 64px !important
+.hero-body
+    padding-left: 6rem !important
+    padding-right: 6rem !important
 </style>
