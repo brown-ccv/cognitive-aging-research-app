@@ -5,7 +5,7 @@
     aria-label="main navigation"
   >
     <div class="navbar-brand">
-      <a class="navbar-item" href="/">
+      <a class="navbar-item" href="www.brown.edu">
         <BrownLogo />
       </a>
       <h1 class="navbar-item">
@@ -19,15 +19,11 @@
         aria-expanded="false"
         data-target="navbarBasicExample"
       >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
       </a>
     </div>
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start"></div>
-
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">

@@ -1,59 +1,79 @@
 <template>
   <div>
     <BaseNavBar v-if="!userProfile" />
-    <div class="is-flex is-align-items-center is-flex-direction-column pb-6">
-      <h1 class="title">Cognitive Research at Brown</h1>
+    <Hero />
+    <div class="overview block content">
+      <h2>Overview</h2>
       <p>
-        Some description about what this portal is and why you want
-        participants. See below our current studies.
+        The Cognitive Research Network (CRN) at Brown University is actively
+        conducting research to understand the cognitive and neural mechanisms of
+        memory, learning, decision making, and cognitive control in adulthood.
+        Researchers at the CRN are Brown faculty and students from a diverse
+        background. The collaborative environment at Brown often enables us to
+        have projects across traditional disciplinary boundaries. Our
+        methodological toolbox includes behavioral experiments,
+        psychophysiology, functional magnetic resonance imaging (fMRI),
+        electroencephalography (EEG), eye-tracking, and computational modeling.
+        You can find out more about the individual projects and research labs
+        below. If you would like to help us by participating in our studies,
+        please click the button above to fill out our volunteer registration
+        form. Volunteers will be contacted to participate in new and ongoing
+        studies at Brown CRN according to their preferences.
+        <strong>
+          You may opt-out at any time, to do so, please email
+          nassarlab@brown.edu with your name and the phone number or email
+          address you used for the registration form.</strong
+        >
+        We cannot wait to have you as part of our exciting cognitive research at
+        Brown University!
       </p>
-      <router-link
-        to="new-participant"
-        class="button is-primary is-large has-text-dark width-30"
-        >Click here to enter your name</router-link
-      >
     </div>
-    <div class="study-group">
-      <div v-for="(study, i) in studies" :key="i" class="box study-box">
-        <article class="media">
-          <div class="media-content">
-            <div class="content">
-              <span class="tag is-link is-large"
-                ><a class="has-text-white" :href="study.lab_link"
-                  >{{ study.lab_name
-                  }}<font-awesome-icon
-                    class="ml-3"
-                    icon="external-link-square-alt"/></a
-              ></span>
-              <h2>{{ study.name }}</h2>
-              <p>{{ study.study_owner }}</p>
-              <p>
-                <br />
-                {{ study.description }}
-                <br />
-              </p>
-            </div>
-            <nav class="level is-mobile">
-              <div class="level-left">
-                <a class="level-item" aria-label="reply">
-                  <span class="icon is-small">
-                    <i class="fas fa-reply" aria-hidden="true"></i>
-                  </span>
-                </a>
-                <a class="level-item" aria-label="retweet">
-                  <span class="icon is-small">
-                    <i class="fas fa-retweet" aria-hidden="true"></i>
-                  </span>
-                </a>
-                <a class="level-item" aria-label="like">
-                  <span class="icon is-small">
-                    <i class="fas fa-heart" aria-hidden="true"></i>
-                  </span>
-                </a>
+    <div class="labs">
+      <div class="labs-header block content">
+        <h2>Member Labs</h2>
+      </div>
+      <div class="study-group">
+        <div v-for="(study, i) in studies" :key="i" class="box study-box">
+          <article class="media">
+            <div class="media-content">
+              <div class="content">
+                <span class="tag is-link is-large"
+                  ><a class="has-text-white" :href="study.lab_link"
+                    >{{ study.lab_name
+                    }}<font-awesome-icon
+                      class="ml-3"
+                      icon="external-link-square-alt"/></a
+                ></span>
+                <h2>{{ study.name }}</h2>
+                <p>{{ study.study_owner }}</p>
+                <p>
+                  <br />
+                  {{ study.description }}
+                  <br />
+                </p>
               </div>
-            </nav>
-          </div>
-        </article>
+              <nav class="level is-mobile">
+                <div class="level-left">
+                  <a class="level-item" aria-label="reply">
+                    <span class="icon is-small">
+                      <i class="fas fa-reply" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" aria-label="retweet">
+                    <span class="icon is-small">
+                      <i class="fas fa-retweet" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" aria-label="like">
+                    <span class="icon is-small">
+                      <i class="fas fa-heart" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                </div>
+              </nav>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </div>
@@ -61,8 +81,12 @@
 
 <script>
 import { mapState } from 'vuex'
+import Hero from '@/components/Hero.vue'
+
 export default {
-  components: {},
+  components: {
+    Hero
+  },
   computed: {
     ...mapState(['userProfile']),
     ...mapState('firebase', ['studies'])
@@ -85,4 +109,22 @@ export default {
   width: 40ch
 .width-30
   width: 30ch
+</style>
+
+<style scoped>
+.overview {
+  padding-top: 40px;
+  font-size: 20px;
+  padding: 6rem;
+  justify-content: space-around;
+  background-color: whitesmoke;
+}
+.labs {
+  padding-top: 40px;
+}
+
+.labs-header {
+  font-size: 20px;
+  padding-left: 6rem;
+}
 </style>

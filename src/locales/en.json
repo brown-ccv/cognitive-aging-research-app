@@ -1,3 +1,10 @@
 {
-  "message": "hello i18n !!"
-}
+    "hero": {
+      "title": "Behavioral Task Hub",
+      "heading": "A hub for researchers to share and find behavioral tasks",
+      "description": "The Behavioral Task Hub serves as a central and open registry of behavioral tasks, their provenance and deployment details. This website was built by members and interns of CCV to support discovery, sharing, reproducibility and collaboration across different labs at Brown and beyond. Adding the information about your tasks is a simple process, see ",
+      "description2": "All behavioral tasks are welcome! If you would like to see additional information on this site, ",
+      "button-text": "Explore below!",
+      "add-task-button": "Register your task"
+    }
+  }
