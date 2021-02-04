@@ -1,9 +1,9 @@
 <template>
   <section class="hero is-small">
     <div class="hero-body hero-no-padding">
-      <div class="columns">
-        <div class="column">
-          <div class="container title-padding">
+      <div class="columns is-mobile is-vcentered">
+        <div class="column is-half is-multiline">
+          <div class="container">
             <p class="title">
               Cognitive Research at Brown
             </p>
@@ -15,7 +15,7 @@
             <router-link
               to="new-participant"
               class="button is-link is-large has-text-light"
-              >Click here to contribute to our science</router-link
+              >Contribute to our science</router-link
             >
           </div>
         </div>
