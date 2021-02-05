@@ -37,13 +37,15 @@
           <article class="media">
             <div class="media-content">
               <div class="content">
-                <span class="tag is-link is-large"
-                  ><a class="has-text-white" :href="study.lab_link"
-                    >{{ study.lab_name
-                    }}<font-awesome-icon
-                      class="ml-3"
-                      icon="external-link-square-alt"/></a
-                ></span>
+                <b-button
+                  type="is-link"
+                  tag="a"
+                  :href="study.lab_link"
+                  pack="fas"
+                  icon-right="external-link-square-alt"
+                >
+                  {{ study.lab_name }}
+                </b-button>
                 <h2>{{ study.name }}</h2>
                 <p>{{ study.study_owner }}</p>
                 <p>
