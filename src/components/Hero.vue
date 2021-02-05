@@ -9,7 +9,7 @@
             </p>
 
             <p class="subtitle">
-              Undertanding the cognitive and neural mechanisms of memory,
+              Understanding the cognitive and neural mechanisms of memory,
               learning, decision making, and cognitive control in adulthood
             </p>
             <router-link
