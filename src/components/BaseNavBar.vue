@@ -1,45 +1,32 @@
 <template>
-  <nav
-    class="navbar has-background-light"
-    role="navigation"
-    aria-label="main navigation"
-  >
-    <div class="navbar-brand">
-      <a class="navbar-item" href="/">
+  <b-navbar>
+    <template #brand>
+      <b-navbar-item class="navbar-header-end" tag="a" href="https://brown.edu">
         <BrownLogo />
-      </a>
-      <h1 class="navbar-item">
-        Cognitive Research at Brown
-      </h1>
+      </b-navbar-item>
+    </template>
+    <template #start>
+      <b-navbar-item class="custom-size" href="/">
+        Cognitive Research
+      </b-navbar-item>
+    </template>
 
-      <a
-        role="button"
-        class="navbar-burger burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="navbarBasicExample"
-      >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start"></div>
-
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <a class="button is-light" href="/login"
-              >Researcher Login
-              <font-awesome-icon class="login-icon" icon="sign-in-alt" />
-            </a>
-          </div>
+    <template #end>
+      <b-navbar-item tag="div">
+        <div class="buttons">
+          <b-button
+            type="is-light"
+            tag="router-link"
+            to="/login"
+            pack="fas"
+            icon-right="sign-in-alt"
+          >
+            Researcher Login
+          </b-button>
         </div>
-      </div>
-    </div>
-  </nav>
+      </b-navbar-item>
+    </template>
+  </b-navbar>
 </template>
 
 <script>
@@ -51,3 +38,18 @@ export default {
   }
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.page-name {
+  padding-left: 40px;
+}
+.navbar-header-end {
+  padding-right: 20px;
+  border-right: 1px solid grey;
+}
+.custom-size {
+  font-size: 20px;
+  padding-left: 20px;
+}
+</style>
