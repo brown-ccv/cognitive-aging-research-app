@@ -35,11 +35,7 @@
             :valid="!$v.form.password.$invalid"
           >
           </BaseInput>
-          <button
-            class="button is-success"
-            type="submit"
-            :disabled="$v.$anyError || $v.form.$invalid"
-          >
+          <button class="button is-success" type="submit">
             Login
           </button>
         </form>
@@ -55,6 +51,7 @@ import { email, required } from 'vuelidate/lib/validators'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import { mapState } from 'vuex'
+import { db } from '@/main'
 
 export default {
   mixins: [validationMixin],
@@ -88,19 +85,50 @@ export default {
     }
   },
   methods: {
+    validAccountCheck(response) {
+      let user = firebase.auth().currentUser
+      console.log(user)
+      console.log(user.email)
+      console.log(response)
+      //   const respUser = response.user.email
+      return db
+        .collection('admin')
+        .doc(user.email)
+        .get()
+        .then(() => {
+          this.$store.dispatch('login/authenticate', user.email)
+          this.$store.dispatch('firebase/bindStudies')
+          this.$store.dispatch('firebase/bindParticipants')
+          return true
+        })
+        .catch(err => {
+          // Not a white-listed user
+          console.log(err)
+          return false
+        })
+    },
+
     login() {
       let that = this
+      var provider = new firebase.auth.GoogleAuthProvider()
       firebase
         .auth()
         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(async () => {
           await firebase
             .auth()
-            .signInWithEmailAndPassword(this.form.email, this.form.password)
+            // .signInWithEmailAndPassword(this.form.email, this.form.password)
+            .signInWithPopup(provider)
             .then(response => {
-              this.$store.dispatch('login/authenticate', response)
-              this.$store.dispatch('firebase/bindStudies')
-              this.$store.dispatch('firebase/bindParticipants')
+              this.validAccountCheck(response).then(validAccount => {
+                if (validAccount) {
+                  console.log('Valid User')
+                } else {
+                  firebase.auth().signOut()
+                  console.log('Invalid User')
+                  throw new Error('Error text.')
+                }
+              })
             })
           this.$router.replace({ name: 'dashboard' })
         })
@@ -112,7 +140,7 @@ export default {
         })
     },
     hideNotification() {
-      this.showNotification = false
+      this.showNotification = true
     }
   }
 }
