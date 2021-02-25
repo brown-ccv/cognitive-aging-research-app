@@ -16,8 +16,7 @@
         <div class="buttons">
           <b-button
             type="is-light"
-            tag="router-link"
-            to="/login"
+            @click="login"
             pack="fas"
             icon-right="sign-in-alt"
           >
@@ -31,10 +30,61 @@
 
 <script>
 import BrownLogo from '@/components/BrownLogo'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import { mapState } from 'vuex'
+import { db } from '@/main'
 
 export default {
   components: {
     BrownLogo
+  },
+  computed: {
+    ...mapState(['userProfile'])
+  },
+  methods: {
+    async validAccountCheck(response) {
+      let user = firebase.auth().currentUser
+      console.log(user)
+      console.log(user.email)
+      console.log(response)
+      //   const respUser = response.user.email
+      try {
+        await db
+          .collection('admin')
+          .doc(user.email)
+          .get()
+        this.$store.dispatch('login/authenticate', user.email)
+        this.$store.dispatch('firebase/bindStudies')
+        this.$store.dispatch('firebase/bindParticipants')
+        return true
+      } catch (err) {
+        console.log('Not authorized1')
+        console.log(err)
+        return false
+      }
+    },
+
+    async login() {
+      try {
+        var provider = new firebase.auth.GoogleAuthProvider()
+
+        let response = await firebase.auth().signInWithPopup(provider)
+
+        let validAccount = await this.validAccountCheck(response)
+
+        if (!validAccount) {
+          await firebase.auth().signOut()
+          throw new Error('Invalid User')
+        }
+        this.$router.replace({ name: 'dashboard' })
+      } catch (err) {
+        this.$router.replace({ name: 'login-failed' })
+      }
+    },
+    hideNotification() {
+      this.showNotification = true
+    }
   }
 }
 </script>
