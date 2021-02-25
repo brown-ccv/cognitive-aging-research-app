@@ -25,26 +25,12 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { email, required } from 'vuelidate/lib/validators'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import { mapState } from 'vuex'
 import { db } from '@/main'
 
 export default {
-  mixins: [validationMixin],
-  validations: {
-    form: {
-      email: {
-        required,
-        email
-      },
-      password: {
-        required
-      }
-    }
-  },
   data() {
     return {
       form: {
@@ -89,14 +75,8 @@ export default {
     async login() {
       try {
         var provider = new firebase.auth.GoogleAuthProvider()
-        await firebase
-          .auth()
-          .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
-        let response = await firebase
-          .auth()
-          // .signInWithEmailAndPassword(this.form.email, this.form.password)
-          .signInWithPopup(provider)
+        let response = await firebase.auth().signInWithPopup(provider)
 
         let validAccount = await this.validAccountCheck(response)
 
