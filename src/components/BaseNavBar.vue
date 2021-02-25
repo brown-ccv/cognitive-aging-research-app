@@ -7,7 +7,7 @@
     </template>
     <template #start>
       <b-navbar-item class="custom-size" href="/">
-        Cognitive Research
+        Cognitive Research Home
       </b-navbar-item>
     </template>
 
@@ -51,7 +51,7 @@ export default {
       //   const respUser = response.user.email
       try {
         await db
-          .collection('admin')
+          .collection('administrators')
           .doc(user.email)
           .get()
         this.$store.dispatch('login/authenticate', user.email)
