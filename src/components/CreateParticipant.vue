@@ -5,89 +5,80 @@
     >
 
     <form id="participant-form" v-on:submit.prevent="submitForm">
-      <BaseInput
-        id="name"
-        label="Name"
-        type="text"
-        placeholder="Enter your name"
-        v-model="form.name"
-        @blur="$v.form.name.$touch()"
-        :error="$v.form.name.$error"
-        :valid="!$v.form.name.$invalid"
-      >
-      </BaseInput>
+      <b-field label="Name">
+        <b-input
+          id="name"
+          type="text"
+          placeholder="Enter your name"
+          v-model="form.name"
+        >
+        </b-input>
+      </b-field>
+      <b-field label="Year of Birth">
+        <b-input
+          id="yob"
+          type="number"
+          min="1910"
+          max="2040"
+          placeholder="Year of Birth"
+          v-model="form.yob"
+        >
+        </b-input>
+      </b-field>
+      <b-field label="Sex at Birth">
+        <b-select v-model="form.sex_at_birth">
+          <option v-for="(option, idx) in sex_at_birth_options" :key="idx">
+            {{ option }}
+          </option>
+        </b-select>
+      </b-field>
 
-      <BaseInput
-        id="yob"
-        label="Year of Birth"
-        type="text"
-        placeholder="Year of Birth"
-        v-model="form.yob"
-        @blur="$v.form.yob.$touch()"
-        :error="$v.form.yob.$error"
-        :valid="!$v.form.yob.$invalid"
-      >
-      </BaseInput>
-
-      <BaseSelect
-        label="Sex at Birth"
-        id="sex-at-birth"
-        :options="sex_at_birth_options"
-        v-model="form.sex_at_birth"
-      />
       <label class="label is-large">Contact Information</label>
 
-      <div class="field-inline">
-        <BaseSelect
-          label="Preferred method of contact"
-          id="preferred-contact"
-          :options="contact_options"
-          v-model="form.contact_preference"
-        />
+      <!-- <b-field horizontal> -->
+      <b-field label="Preferred method of contact">
+        <b-select v-model="form.contact_preference">
+          <option v-for="(option, idx) in contact_options" :key="idx">
+            {{ option }}
+          </option>
+        </b-select>
+      </b-field>
 
-        <div class="field">
-          <label class="label">Preferred Time of Contact</label>
-          <div
-            class="field"
+      <div class="field">
+        <label class="label">Preferred Time of Contact</label>
+        <div>
+          <b-checkbox
             v-for="(item, index) in preferred_time_of_contact_options"
-            v-bind:key="index"
+            :key="index"
+            type="is-light"
+            v-model="form.preferred_time_of_contact"
+            :id="item.label"
+            :native-value="item.value"
           >
-            <input
-              class="is-checkradio is-success"
-              type="checkbox"
-              :id="item.label"
-              :name="item.label"
-              :value="item.value"
-              v-model="form.preferred_time_of_contact"
-            />
-            <label :for="item.label">{{ item.value }}</label>
-          </div>
+            {{ item.value }}
+          </b-checkbox>
         </div>
       </div>
 
-      <BaseInput
-        id="phone"
-        label="Phone"
-        type="text"
-        placeholder="Phone"
-        v-model="form.phone"
-        @blur="$v.form.phone.$touch()"
-        :error="$v.form.phone.$error"
-        :valid="!$v.form.phone.$invalid && form.contact_preference === 'phone'"
-      >
-      </BaseInput>
+      <b-field label="Phone">
+        <b-input
+          id="phone"
+          type="number"
+          placeholder="Phone"
+          v-model="form.phone"
+        >
+        </b-input>
+      </b-field>
 
-      <BaseInput
-        id="email"
-        label="Email"
-        type="text"
-        placeholder="Email"
-        v-model="form.email"
-        @blur="$v.form.email.$touch()"
-        :error="$v.form.email.$error"
-        :valid="!$v.form.email.$invalid && form.contact_preference === 'email'"
-      >
-      </BaseInput>
+      <b-field label="Email">
+        <b-input
+          id="email"
+          type="email"
+          placeholder="Email"
+          v-model="form.email"
+        >
+        </b-input>
+      </b-field>
 
       <div class="control">
         <div v-if="success">
