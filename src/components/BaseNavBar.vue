@@ -43,12 +43,8 @@ export default {
     ...mapState(['userProfile'])
   },
   methods: {
-    async validAccountCheck(response) {
+    async validAccountCheck() {
       let user = firebase.auth().currentUser
-      console.log(user)
-      console.log(user.email)
-      console.log(response)
-      //   const respUser = response.user.email
       try {
         await db
           .collection('administrators')
@@ -60,7 +56,6 @@ export default {
         this.$store.dispatch('firebase/bindAdministrators')
         return true
       } catch (err) {
-        console.log('Not authorized1')
         console.log(err)
         return false
       }
@@ -70,17 +65,17 @@ export default {
       try {
         var provider = new firebase.auth.GoogleAuthProvider()
 
-        let response = await firebase.auth().signInWithPopup(provider)
+        await firebase.auth().signInWithPopup(provider)
 
-        let validAccount = await this.validAccountCheck(response)
+        let validAccount = await this.validAccountCheck()
 
         if (!validAccount) {
           await firebase.auth().signOut()
-          throw new Error('Invalid User')
+          this.$router.replace({ name: 'login-failed' })
         }
         this.$router.replace({ name: 'dashboard' })
       } catch (err) {
-        this.$router.replace({ name: 'login-failed' })
+        console.log(err)
       }
     },
     hideNotification() {
