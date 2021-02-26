@@ -3,77 +3,80 @@
     <label for="participant-form" class="label is-large">Add New Study</label>
 
     <form id="participant-form" v-on:submit.prevent="submitForm">
-      <BaseInput
-        id="name"
-        label="Name"
-        type="text"
-        placeholder="Enter the study name"
-        v-model="form.name"
-        @blur="$v.form.name.$touch()"
-        :error="$v.form.name.$error"
-        :valid="!$v.form.name.$invalid"
-      >
-      </BaseInput>
+      <b-field label="Name">
+        <b-input
+          id="name"
+          type="text"
+          requiered
+          placeholder="Enter the study name"
+          v-model="form.name"
+        >
+        </b-input>
+      </b-field>
+      <b-field label="PI">
+        <b-input
+          id="pi"
+          type="text"
+          requiered
+          placeholder="Enter PI"
+          v-model="form.pi"
+        >
+        </b-input>
+      </b-field>
 
-      <BaseInput
-        id="pi"
-        label="PI"
-        type="text"
-        placeholder="Enter PI"
-        v-model="form.pi"
-        @blur="$v.form.pi.$touch()"
-        :error="$v.form.pi.$error"
-        :valid="!$v.form.pi.$invalid"
-      >
-      </BaseInput>
+      <b-field label="Lab Name">
+        <b-input
+          id="lab_name"
+          type="text"
+          requiered
+          placeholder="Enter Lab Name"
+          v-model="form.lab_name"
+        >
+        </b-input>
+      </b-field>
 
-      <BaseInput
-        id="lab_name"
-        label="Lab Name"
-        type="text"
-        placeholder="Enter Lab Name"
-        v-model="form.lab_name"
-        @blur="$v.form.lab_name.$touch()"
-        :error="$v.form.lab_name.$error"
-        :valid="!$v.form.lab_name.$invalid"
-      >
-      </BaseInput>
+      <b-field label="Lab Link">
+        <b-input
+          id="lab_link"
+          type="url"
+          placeholder="Enter link to lab website"
+          v-model="form.lab_link"
+        >
+        </b-input>
+      </b-field>
 
-      <BaseInput
-        id="lab_link"
-        label="Lab Link"
-        type="text"
-        placeholder="Enter link to lab website"
-        v-model="form.lab_link"
-        @blur="$v.form.lab_link.$touch()"
-        :error="$v.form.lab_link.$error"
-        :valid="!$v.form.lab_link.$invalid"
-      >
-      </BaseInput>
+      <b-field label="Study Owner">
+        <b-input
+          id="study_owner"
+          type="text"
+          placeholder="Enter Study Owner"
+          v-model="form.study_owner"
+        >
+        </b-input>
+      </b-field>
+      <b-field label="Study Description">
+        <b-input
+          id="description"
+          type="text"
+          placeholder="Enter Study Description"
+          v-model="form.description"
+        >
+        </b-input>
+      </b-field>
 
-      <BaseInput
-        id="study_owner"
-        label="Study Owner"
-        type="text"
-        placeholder="Enter Study Owner"
-        v-model="form.study_owner"
-        @blur="$v.form.study_owner.$touch()"
-        :error="$v.form.study_owner.$error"
-        :valid="!$v.form.study_owner.$invalid"
-      >
-      </BaseInput>
-
-      <BaseInput
-        id="description"
-        label="Study Description"
-        type="text"
-        placeholder="Enter Study Description"
-        v-model="form.description"
-        @blur="$v.form.description.$touch()"
-        :error="$v.form.description.$error"
-        :valid="!$v.form.description.$invalid"
-      >
-      </BaseInput>
+      <div class="buttons">
+        <b-button
+          native-type="submit"
+          :disabled="$v.$anyError || $v.form.$invalid"
+          type="is-primary"
+          :class="{ loading: loading }"
+        >
+          Submit
+        </b-button>
+        <b-button @click="reset" type="is-light" :class="{ loading: loading }">
+          Reset
+        </b-button>
+      </div>
 
       <div class="control">
         <div v-if="success">
@@ -81,26 +84,11 @@
           <font-awesome-icon class="success" icon="check" />
         </div>
         <div v-else-if="failed" class="flex">
-          <button
-            :disabled="$v.$anyError || $v.form.$invalid"
-            class="button is-primary"
-            :class="{ loading: loading }"
-          >
-            Submit
-          </button>
           <div>
             Failed to submit form, try again.
             <font-awesome-icon class="error" icon="exclamation-circle" />
           </div>
         </div>
-        <button
-          v-else
-          :disabled="$v.$anyError || $v.form.$invalid"
-          class="button is-primary"
-          :class="{ loading: loading }"
-        >
-          Submit
-        </button>
       </div>
     </form>
   </div>
@@ -109,7 +97,7 @@
 <script>
 import store from '@/store/index'
 import { validationMixin } from 'vuelidate'
-import { required } from 'vuelidate/lib/validators'
+import { required, url } from 'vuelidate/lib/validators'
 
 export default {
   mixins: [validationMixin],
@@ -128,7 +116,8 @@ export default {
         required
       },
       lab_link: {
-        required
+        required,
+        url
       },
       study_owner: {
         required
@@ -152,6 +141,14 @@ export default {
     }
   },
   methods: {
+    reset() {
+      this.form.name = ''
+      this.form.lab_name = ''
+      this.form.lab_link = ''
+      this.form.study_owner = ''
+      this.form.pi = ''
+      this.form.description = ''
+    },
     submitForm: async function() {
       await this.$recaptchaLoaded()
       await this.$recaptcha('submit')

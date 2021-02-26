@@ -3,69 +3,60 @@
     <main>
       <h1 class="title">{{ study.name }}</h1>
       <form id="study-update-form" v-on:submit.prevent="submitForm">
-        <BaseInput
-          id="name"
-          label="Study Name"
-          type="text"
-          :placeholder="study.name"
-          v-model="study.name"
-          @blur="$v.study.name.$touch()"
-          :error="$v.study.name.$error"
-        />
+        <b-field label="Study Name">
+          <b-input
+            id="name"
+            type="text"
+            :placeholder="study.name"
+            v-model="study.name"
+          />
+        </b-field>
 
-        <BaseInput
-          id="pi"
-          label="PI"
-          type="text"
-          :placeholder="study.pi"
-          v-model="study.pi"
-          @blur="$v.study.pi.$touch()"
-          :error="$v.study.pi.$error"
-        />
+        <b-field label="PI">
+          <b-input
+            id="pi"
+            type="text"
+            :placeholder="study.pi"
+            v-model="study.pi"
+          />
+        </b-field>
 
-        <BaseInput
-          id="lab_name"
-          label="Lab Name"
-          type="text"
-          :placeholder="study.lab_name"
-          v-model="study.lab_name"
-          @blur="$v.study.lab_name.$touch()"
-          :error="$v.study.lab_name.$error"
-        />
+        <b-field label="Lab Name">
+          <b-input
+            id="lab_name"
+            type="text"
+            :placeholder="study.lab_name"
+            v-model="study.lab_name"
+          />
+        </b-field>
 
-        <BaseInput
-          id="lab_link"
-          label="Lab Link"
-          type="text"
-          placeholder="Enter link to lab website"
-          v-model="study.lab_link"
-          @blur="$v.study.lab_link.$touch()"
-          :error="$v.study.lab_link.$error"
-          :valid="!$v.study.lab_link.$invalid"
-        >
-        </BaseInput>
+        <b-field label="Lab Link">
+          <b-input
+            id="lab_link"
+            type="url"
+            placeholder="Enter link to lab website"
+            v-model="study.lab_link"
+          >
+          </b-input>
+        </b-field>
 
-        <BaseInput
-          id="study_owner"
-          label="Study Owner"
-          type="text"
-          placeholder="Enter Study Owner"
-          v-model="study.study_owner"
-          @blur="$v.study.study_owner.$touch()"
-          :error="$v.study.study_owner.$error"
-          :valid="!$v.study.study_owner.$invalid"
-        >
-        </BaseInput>
+        <b-field label="Study Owner">
+          <b-input
+            id="study_owner"
+            type="text"
+            placeholder="Enter Study Owner"
+            v-model="study.study_owner"
+          >
+          </b-input>
+        </b-field>
 
-        <BaseInput
-          id="description"
-          label="Study Description"
-          type="text"
-          :placeholder="study.description"
-          v-model="study.description"
-          @blur="$v.study.description.$touch()"
-          :error="$v.study.description.$error"
-        />
+        <b-field label="Study Description">
+          <b-input
+            id="description"
+            type="text"
+            :placeholder="study.description"
+          />
+        </b-field>
 
         <div class="control">
           <div v-if="success">
@@ -102,7 +93,7 @@
 <script>
 import store from '@/store/index'
 import { validationMixin } from 'vuelidate'
-import { required } from 'vuelidate/lib/validators'
+import { required, url } from 'vuelidate/lib/validators'
 import { mapState } from 'vuex'
 
 export default {
@@ -133,7 +124,8 @@ export default {
         required
       },
       lab_link: {
-        required
+        required,
+        url
       },
       study_owner: {
         required

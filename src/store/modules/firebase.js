@@ -11,7 +11,8 @@ export default {
     contact_attempts: [],
     studies: [],
     participant: {},
-    study: {}
+    study: {},
+    administrators: {}
   },
   mutations: {
     SET_PARTICIPANT(state, payload) {
@@ -187,6 +188,23 @@ export default {
           description: data.description,
           updated_by: firebase.auth().currentUser.uid,
           date_updated: Date.now()
+        })
+    }),
+    // Participants actions
+    bindAdministrators: firestoreAction(async ({ bindFirestoreRef }) => {
+      return await bindFirestoreRef(
+        'administrators',
+        db.collection('administrators')
+      )
+    }),
+    createAdministrator: firestoreAction(async (context, data) => {
+      console.log(data)
+      return await db
+        .collection('administrators')
+        .doc(data.admin_email)
+        .set({
+          lab: data.admin_lab,
+          created_by: firebase.auth().currentUser.uid
         })
     })
   }

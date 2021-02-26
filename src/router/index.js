@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
-import Login from '@/views/Login.vue'
-import Reset from '@/views/Reset.vue'
+import LoginFailed from '@/views/LoginFailed.vue'
 import Dashboard from '@/views/private/Dashboard.vue'
 import Edit from '@/views/private/Edit.vue'
 import Studies from '@/views/private/Studies.vue'
@@ -68,22 +67,16 @@ const routes = [
     meta: { requiresAuth: true, title: 'Update Study' }
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login,
-    meta: { title: 'Login' }
+    path: '/login-failed',
+    name: 'login-failed',
+    component: LoginFailed,
+    meta: { title: 'Login Failed' }
   },
   {
     path: '/register',
     name: 'register',
     component: Register,
     meta: { requiresAuth: true, title: 'Register' }
-  },
-  {
-    path: '/reset',
-    name: 'reset',
-    component: Reset,
-    meta: { title: 'Reset Password' }
   }
 ]
 
@@ -104,7 +97,7 @@ router.beforeEach((to, from, next) => {
     next()
   }
   if (requiresAuth && !authenticated) {
-    next('/login')
+    next('/login-failed')
   } else {
     next()
   }

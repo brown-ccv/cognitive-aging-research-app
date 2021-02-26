@@ -8,6 +8,11 @@
         :main="participants.length"
         footer="registered"
       />
+      <DashboardCard
+        header="Administrators"
+        :main="administrators.length"
+        footer="registered"
+      />
     </main>
   </div>
 </template>
@@ -21,7 +26,7 @@ export default {
     DashboardCard
   },
   computed: {
-    ...mapState('firebase', ['participants', 'studies']),
+    ...mapState('firebase', ['participants', 'studies', 'administrators']),
     ...mapState(['userProfile'])
   }
 }

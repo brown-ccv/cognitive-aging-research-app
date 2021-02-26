@@ -7,7 +7,7 @@
     </template>
     <template #start>
       <b-navbar-item class="custom-size" href="/">
-        Cognitive Research
+        Cognitive Research Home
       </b-navbar-item>
     </template>
 
@@ -16,8 +16,7 @@
         <div class="buttons">
           <b-button
             type="is-light"
-            tag="router-link"
-            to="/login"
+            @click="login"
             pack="fas"
             icon-right="sign-in-alt"
           >
@@ -31,10 +30,57 @@
 
 <script>
 import BrownLogo from '@/components/BrownLogo'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import { mapState } from 'vuex'
+import { db } from '@/main'
 
 export default {
   components: {
     BrownLogo
+  },
+  computed: {
+    ...mapState(['userProfile'])
+  },
+  methods: {
+    async validAccountCheck() {
+      let user = firebase.auth().currentUser
+      try {
+        await db
+          .collection('administrators')
+          .doc(user.email)
+          .get()
+        this.$store.dispatch('login/authenticate', user.email)
+        this.$store.dispatch('firebase/bindStudies')
+        this.$store.dispatch('firebase/bindParticipants')
+        this.$store.dispatch('firebase/bindAdministrators')
+        return true
+      } catch (err) {
+        console.log(err)
+        return false
+      }
+    },
+
+    async login() {
+      try {
+        var provider = new firebase.auth.GoogleAuthProvider()
+
+        await firebase.auth().signInWithPopup(provider)
+
+        let validAccount = await this.validAccountCheck()
+
+        if (!validAccount) {
+          await firebase.auth().signOut()
+          this.$router.replace({ name: 'login-failed' })
+        }
+        this.$router.replace({ name: 'dashboard' })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    hideNotification() {
+      this.showNotification = true
+    }
   }
 }
 </script>

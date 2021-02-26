@@ -78,7 +78,7 @@
             v-bind:class="{ active: active }"
             icon="id-card"
           />
-          <span v-show="active">Create Researcher Account</span></router-link
+          <span v-show="active">Register Administrator</span></router-link
         >
       </li>
     </ul>
