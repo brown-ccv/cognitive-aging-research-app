@@ -25,10 +25,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm config set "//npm.fontawesome.com/:_authToken" ${{ secrets.FONTAWESOME_TOKEN }}
           yarn
         env:
           CI: true
-          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
 
       - name: Build
         run: yarn build
