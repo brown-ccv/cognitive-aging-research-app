@@ -4,38 +4,37 @@
     <div v-for="(p, i) in participants" v-bind:key="i">
       {{ p.study_list }}
     </div>
-    <form v-on:submit.prevent="handleFilter">
-      <div class="field-inline">
-        <label for="name" class="filter-label">Filter by Name:</label>
-        <BaseInput id="name" type="text" placeholder="Name" v-model="name" />
-      </div>
-      <div class="field-inline">
-        <h1 class="filter-label">Born between:</h1>
-
-        <BaseInput
+    <section>
+      <b-field horizontal label="Filter by Name:">
+        <b-input id="name" type="text" placeholder="Name" v-model="name" />
+      </b-field>
+      <b-field horizontal label="Born between:">
+        <b-input
           id="start"
           type="text"
-          placeholder="year"
+          placeholder="Start Year"
           v-model="startYear"
         />
-        <p>and</p>
-        <BaseInput id="end" type="text" placeholder="year" v-model="endYear" />
-      </div>
-      <div class="field-inline">
-        <h1 class="filter-label">Participated in Study:</h1>
-        <BaseSelect
-          id="study"
-          :options="studiesNames"
-          v-model="selectedStudy"
+        <b-input
+          id="end"
+          type="text"
+          placeholder="End Year"
+          v-model="endYear"
         />
-        <p>in</p>
-        <BaseInput
+      </b-field>
+      <b-field horizontal label="Participated in Study:">
+        <b-select placeholder="Select Study" exanded>
+          <option v-for="(option, idx) in studiesNames" :key="idx">
+            {{ option }}
+          </option>
+        </b-select>
+        <b-input
           id="studyYear"
           type="text"
-          placeholder="year"
+          placeholder="Study Year"
           v-model="studyYear"
         />
-      </div>
+      </b-field>
 
       <button class="button is-info filter-button" type="submit">Filter</button>
       <button
@@ -45,7 +44,7 @@
       >
         Reset
       </button>
-    </form>
+    </section>
 
     <BaseTable
       v-if="reducedData.length > 0"
@@ -172,19 +171,3 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-@import 'bulma'
-.field-inline
-  align-items: center
-.field
-  margin-left: 1rem
-  margin-right: 1rem
-  margin-bottom: 0 !important
-.filter-label
-  @extend .label
-  margin-bottom: 0 !important
-.filter-button
-  margin-top: 2rem
-  margin-bottom: 2rem
-  margin-right: 1rem
-</style>
