@@ -104,7 +104,7 @@ router.beforeEach((to, from, next) => {
     next()
   }
   if (requiresAuth && !authenticated) {
-    next('/login')
+    next('/login-failed')
   } else {
     next()
   }

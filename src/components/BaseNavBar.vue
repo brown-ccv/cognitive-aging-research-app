@@ -57,6 +57,7 @@ export default {
         this.$store.dispatch('login/authenticate', user.email)
         this.$store.dispatch('firebase/bindStudies')
         this.$store.dispatch('firebase/bindParticipants')
+        this.$store.dispatch('firebase/bindAdministrators')
         return true
       } catch (err) {
         console.log('Not authorized1')
