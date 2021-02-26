@@ -41,8 +41,9 @@ jobs:
 
       - name: Install dependencies 👨🏻‍💻
         run: |
-          npm config set "//npm.pkg.github.com/:_authToken" ${{ secrets.GH_TOKEN_DISCO }}
           yarn
+        env:
+          CI: true
 
       - name: Run linter 👀
         run: yarn lint

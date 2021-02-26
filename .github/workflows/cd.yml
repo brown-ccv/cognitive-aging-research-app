@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn install
+          yarn
         env:
           CI: true
 
@@ -37,7 +37,7 @@ jobs:
           VUE_APP_FIRABASE_API_KEY: ${{ secrets.VUE_APP_FIRABASE_API_KEY }}
           VUE_APP_FIRABASE_MSG_SENDER_ID: ${{ secrets.VUE_APP_FIRABASE_MSG_SENDER_ID }}
           VUE_APP_FIRABASE_API_ID: ${{ secrets.VUE_APP_FIRABASE_API_ID }}
-          
+
       - name: Deploy to Firebase
         run: yarn deploy
         env:
