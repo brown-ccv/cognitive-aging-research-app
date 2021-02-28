@@ -41,6 +41,7 @@
                   type="is-link"
                   tag="a"
                   :href="study.lab_link"
+                  target="_blank"
                   pack="fas"
                   icon-right="external-link-square-alt"
                 >
@@ -80,34 +81,32 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .main-section
   margin-top: 10rem
+.overview
+  margin: 0px
+  padding-top: 54px
+  padding-bottom: 54px
+  padding-left: 24px
+  padding-right: 24px
+  font-size: 20px
+  justify-content: space-around
+  background-color: whitesmoke
+.labs
+  margin:0px
+  padding-top: 48px
+  padding-bottom: 48px
+  padding-left: 24px
+  padding-right: 24px
+.labs-header
+  font-size: 20px
 .study-group
   display: flex
   flex-wrap: wrap
   justify-content: space-around
-  padding: 4rem
 .study-box
   width: 40ch
 .width-30
   width: 30ch
-</style>
-
-<style scoped>
-.overview {
-  padding-top: 40px;
-  font-size: 20px;
-  padding: 6rem;
-  justify-content: space-around;
-  background-color: whitesmoke;
-}
-.labs {
-  padding-top: 40px;
-}
-
-.labs-header {
-  font-size: 20px;
-  padding-left: 6rem;
-}
 </style>

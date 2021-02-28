@@ -1,44 +1,36 @@
 <template>
-  <section class="hero is-small">
+  <section class="hero is-large hero-image">
     <div class="hero-body">
-      <div class="columns is-mobile is-vcentered">
-        <div class="column is-half is-multiline">
-          <div class="container">
-            <p class="title">
-              Cognitive Research at Brown
-            </p>
+      <p class="title">
+        Cognitive Research at Brown
+      </p>
 
-            <p class="subtitle">
-              Understanding the cognitive and neural mechanisms of memory,
-              learning, decision making, and cognitive control in adulthood
-            </p>
-            <router-link
-              to="new-participant"
-              class="button is-link is-large has-text-light"
-              >Contribute to our science</router-link
-            >
-          </div>
-        </div>
-        <div class="column">
-          <HeroImage class="hero-pattern" />
-        </div>
-      </div>
+      <p class="subtitle">
+        Understanding the cognitive and neural mechanisms of memory, learning,
+        decision making, and cognitive control in adulthood
+      </p>
+      <router-link
+        to="new-participant"
+        class="button is-link is-outlined is-medium is-multiline"
+        >Contribute to our science</router-link
+      >
     </div>
   </section>
 </template>
 
-<script>
-import HeroImage from '@/assets/illustrations/hero-pattern.svg'
-export default {
-  components: {
-    HeroImage
-  }
-}
-</script>
 <style lang="sass" scoped>
-.hero-pattern
-    width: 100%
 .hero-body
-    padding-left: 6rem !important
-    padding-right: 6rem !important
+.hero-image
+    background-image: url('~@/assets/illustrations/annie-spratt-crop.jpg')
+    background-position: center center
+    background-repeat: no-repeat
+    background-attachment: fixed
+    background-size: cover
+    background-color: #999
+.button.is-multiline
+  min-height: 2.25em
+  white-space: unset
+  height: auto
+  flex-direction: column
+  text-align: left
 </style>
