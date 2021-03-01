@@ -8,7 +8,7 @@ import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 
-Vue.use(VueReCaptcha, { siteKey: '6LfYQeEUAAAAAEeaM78FpwAD3VC_9zIQO_ybYwoa' })
+Vue.use(VueReCaptcha, { siteKey: '6LdbeG0aAAAAAGJUKtztNYyIwxM-KVLCwT2DNsi5' })
 
 // import nprogress css
 import 'nprogress/nprogress.css'
