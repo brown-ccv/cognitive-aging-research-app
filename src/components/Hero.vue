@@ -19,7 +19,6 @@
 </template>
 
 <style lang="sass" scoped>
-.hero-body
 .hero-image
     background-image: url('~@/assets/illustrations/annie-spratt-crop.jpg')
     background-position: center center
