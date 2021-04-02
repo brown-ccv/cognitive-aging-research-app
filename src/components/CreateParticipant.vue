@@ -25,7 +25,7 @@
         >
         </b-input>
       </b-field>
-      <b-field label="Sex at Birth">
+      <b-field label="Sex Assigned at Birth">
         <b-select v-model="form.sex_at_birth">
           <option v-for="(option, idx) in sex_at_birth_options" :key="idx">
             {{ option }}
@@ -165,7 +165,12 @@ export default {
         participated_start_date: null,
         participated_end_date: null
       },
-      sex_at_birth_options: ['-', 'male', 'female'],
+      sex_at_birth_options: [
+        'Female',
+        'Intersex',
+        'Male',
+        'Prefer not to reply'
+      ],
       contact_options: ['phone', 'email'],
       preferred_time_of_contact_options: [
         {

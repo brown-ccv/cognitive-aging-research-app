@@ -13,7 +13,7 @@
             <p>Year Born</p>
           </div>
           <div class="info-group-item">
-            <p>Sex at Birth</p>
+            <p>Sex Assigned at Birth</p>
           </div>
           <div class="info-group-item">
             <p>Preferred Contact Method</p>
