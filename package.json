@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.12",
-    "@vue/cli-plugin-e2e-nightwatch": "~4.5.12",
     "@vue/cli-plugin-eslint": "~4.5.12",
     "@vue/cli-plugin-router": "~4.5.12",
     "@vue/cli-plugin-unit-mocha": "~4.5.12",
@@ -53,7 +52,7 @@
     "broccoli-merge-trees": "^4.1.0",
     "broccoli-sass-source-maps": "^4.0.0",
     "chai": "^4.1.2",
-    "chromedriver": "^80.0.0",
+    "chromedriver": "^89.0.0",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
